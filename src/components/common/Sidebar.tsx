@@ -90,7 +90,6 @@ export const Sidebar: React.FC = () => {
           { id: 'profile', label: 'Manage Profile', icon: <User className="w-4 h-4" /> },
           { id: 'students', label: 'Students', icon: <GraduationCap className="w-4 h-4" />, badge: 342 },
           { id: 'career_guidance', label: 'Career Guidance', icon: <Compass className="w-4 h-4" /> },
-          { id: 'recommendations', label: 'View Recommendations', icon: <Sparkles className="w-4 h-4" /> },
           { id: 'analytics', label: 'View Analytics', icon: <BarChart3 className="w-4 h-4" /> },
           { id: 'notifications', label: 'Notifications', icon: <Bell className="w-4 h-4" />, badge: unreadNotifCount || undefined },
           { id: 'feedback', label: 'Collect Feedback', icon: <MessageSquareHeart className="w-4 h-4" /> },

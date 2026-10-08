@@ -136,8 +136,6 @@ const MainLayout: React.FC = () => {
             return <ProfileManager />;
           case 'students':
             return <AdminUserManagement initialTab="students" />;
-          case 'recommendations':
-            return <AIRecommendations />;
           case 'analytics':
             return <AnalyticsView />;
           case 'feedback':
