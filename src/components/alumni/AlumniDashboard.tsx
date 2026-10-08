@@ -93,11 +93,18 @@ export const AlumniDashboard: React.FC = () => {
 
         <div className="flex items-center gap-3 shrink-0">
           <button
-            onClick={() => setActiveTab('alumni_connect')}
-            className="px-4 py-2 bg-sky-600 hover:bg-sky-500 text-white text-xs font-semibold rounded-lg transition-colors flex items-center gap-1.5"
+            onClick={() => {
+              const el = document.getElementById('mentorship-queue');
+              if (el) {
+                el.scrollIntoView({ behavior: 'smooth' });
+              } else {
+                showToast(`Reviewing ${pendingRequests.length} pending mentorship requests.`);
+              }
+            }}
+            className="px-4 py-2 bg-sky-600 hover:bg-sky-500 text-white text-xs font-semibold rounded-lg transition-colors flex items-center gap-1.5 cursor-pointer"
           >
             <Users className="w-3.5 h-3.5" />
-            Manage Students ({connectedMentorships.length})
+            Mentorship Requests ({pendingRequests.length})
           </button>
           <button
             onClick={() => setIsNotifDrawerOpen(true)}
@@ -150,7 +157,7 @@ export const AlumniDashboard: React.FC = () => {
         {/* Left 2 Cols: Mentorship Queue & Career Feed */}
         <div className="lg:col-span-2 space-y-6">
           {/* Pending Student Mentorship Requests (CRITICAL USE CASE 12) */}
-          <div className="p-6 bg-white border border-slate-200 rounded-xl space-y-4">
+          <div id="mentorship-queue" className="p-6 bg-white border border-slate-200 rounded-xl space-y-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Users className="w-4 h-4 text-sky-600" />

@@ -71,8 +71,8 @@ export const RecruiterDashboard: React.FC = () => {
           <div className="text-2xl font-extrabold text-slate-900 mt-1 tabular-nums">{jobs.length} Active</div>
           <div className="text-[11px] text-slate-500 mt-2 flex items-center justify-between">
             <span>2 Internships · 3 Full-Time</span>
-            <button onClick={() => setActiveTab('opportunities')} className="text-emerald-700 font-semibold hover:underline">
-              Manage
+            <button onClick={() => setActiveTab('post_job')} className="text-emerald-700 font-semibold hover:underline">
+              + Post New
             </button>
           </div>
         </div>

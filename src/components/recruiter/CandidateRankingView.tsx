@@ -67,7 +67,7 @@ export const CandidateRankingView: React.FC = () => {
         <div>
           <h1 className="text-xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
             <Award className="w-5 h-5 text-emerald-600" />
-            AI Candidate Ranking & Factor Decomposition
+            Rank Candidates
           </h1>
           <p className="text-xs text-slate-500 mt-0.5">
             Applicants ranked autonomously by neural matching weights across 4 critical criteria: Skills, Education, Experience, and Career Interest.

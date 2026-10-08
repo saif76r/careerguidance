@@ -44,7 +44,8 @@ export const PostJobForm: React.FC = () => {
       status: isDraft ? 'Draft' : 'Active'
     });
 
-    setActiveTab('opportunities');
+    showToast(isDraft ? 'Job saved as draft.' : 'Job listing posted successfully!');
+    setActiveTab('dashboard');
   };
 
   return (
@@ -54,7 +55,7 @@ export const PostJobForm: React.FC = () => {
         <div>
           <h1 className="text-xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
             <PlusCircle className="w-5 h-5 text-emerald-600" />
-            Post New Opportunity (Job / Internship)
+            Post Jobs
           </h1>
           <p className="text-xs text-slate-500 mt-0.5">
             Create an accredited listing. The AI engine automatically parses requirements and ranks registered students.
@@ -103,7 +104,7 @@ export const PostJobForm: React.FC = () => {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
             <label className="block text-xs font-semibold text-slate-700 mb-1">
-              Opportunity Type *
+              Position Type *
             </label>
             <select
               value={type}

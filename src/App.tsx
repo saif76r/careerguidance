@@ -27,10 +27,10 @@ import { AlumniDashboard } from './components/alumni/AlumniDashboard';
 import { RecruiterDashboard } from './components/recruiter/RecruiterDashboard';
 import { PostJobForm } from './components/recruiter/PostJobForm';
 import { CandidateRankingView } from './components/recruiter/CandidateRankingView';
+import { RecruiterApplications } from './components/recruiter/RecruiterApplications';
 
 // Counselor Views
 import { CounselorDashboard } from './components/counselor/CounselorDashboard';
-import { CounselorCourseOfferings } from './components/counselor/CounselorCourseOfferings';
 import { CounselorCareerGuidance } from './components/counselor/CounselorCareerGuidance';
 
 // Admin Views
@@ -91,9 +91,6 @@ const MainLayout: React.FC = () => {
             return <AlumniDashboard />;
           case 'profile':
             return <ProfileManager />;
-          case 'alumni_connect':
-          case 'connections':
-            return <AlumniConnect />;
           case 'opportunities':
             return <JobSearch />;
           case 'feedback':
@@ -112,13 +109,11 @@ const MainLayout: React.FC = () => {
             return <ProfileManager />;
           case 'post_job':
             return <PostJobForm />;
-          case 'opportunities':
-            return <JobSearch />;
           case 'candidates':
           case 'candidate_ranking':
             return <CandidateRankingView />;
           case 'applications':
-            return <StudentApplications />;
+            return <RecruiterApplications />;
           case 'analytics':
             return <AnalyticsView />;
           case 'feedback':
@@ -134,13 +129,13 @@ const MainLayout: React.FC = () => {
           case 'dashboard':
             return <CounselorDashboard />;
           case 'career_guidance':
-            return <CounselorCareerGuidance />;
+            return <CounselorCareerGuidance initialSubTab="advisory" />;
+          case 'cdc_courses':
+            return <CounselorCareerGuidance initialSubTab="courses" />;
           case 'profile':
             return <ProfileManager />;
           case 'students':
             return <AdminUserManagement initialTab="students" />;
-          case 'cdc_courses':
-            return <CounselorCourseOfferings />;
           case 'recommendations':
             return <AIRecommendations />;
           case 'analytics':

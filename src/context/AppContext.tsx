@@ -196,6 +196,11 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       studentName: currentUser.name,
       studentEmail: currentUser.email,
       studentUniversity: currentUser.university || 'Daffodil International University',
+      studentDegree: currentUser.degree || 'B.Sc. CSE',
+      studentGpa: currentUser.gpa || '3.86',
+      studentAvatar: currentUser.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=256&q=80',
+      studentSkills: currentUser.skills || ['React', 'JavaScript', 'Python'],
+      studentResumeName: resume.fileName || 'Verified_Resume.pdf',
       matchScore: job.matchScore || 88,
       appliedDate: new Date().toISOString().split('T')[0],
       status: 'Applied',
@@ -282,12 +287,33 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   const updateResume = (newResume: Partial<ResumeData>) => {
-    setResume(prev => ({
-      ...prev,
-      ...newResume,
-      uploadedAt: new Date().toISOString().replace('T', ' ').substring(0, 19)
-    }));
-    showToast('Resume uploaded and AI extraction verified');
+    setResume(prev => {
+      const updated = {
+        ...prev,
+        ...newResume,
+        uploadedAt: new Date().toISOString().replace('T', ' ').substring(0, 19)
+      };
+
+      if (newResume.extractedSkills && newResume.extractedSkills.length > 0) {
+        const studentSkills = newResume.extractedSkills.map(s => s.toLowerCase());
+        setJobs(currentJobs => currentJobs.map(job => {
+          const reqs = job.requiredSkills.map(r => r.toLowerCase());
+          const matched = reqs.filter(r => studentSkills.some(s => s.includes(r) || r.includes(s)));
+          const ratio = reqs.length > 0 ? matched.length / reqs.length : 0.7;
+          const score = Math.min(96, Math.max(58, Math.round(52 + ratio * 42)));
+          return {
+            ...job,
+            matchScore: score,
+            matchReasons: matched.length > 0
+              ? [`Matches ${matched.length} skills: ${matched.slice(0, 3).join(', ')}`, 'Aligned with degree program']
+              : ['General academic fit', 'Campus recruitment requisition']
+          };
+        }));
+      }
+
+      return updated;
+    });
+    showToast('Resume uploaded and verified for matching');
   };
 
   const requestMentorship = (alumniId: string, topic: string) => {

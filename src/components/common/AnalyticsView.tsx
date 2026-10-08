@@ -24,7 +24,7 @@ export const AnalyticsView: React.FC = () => {
         <div>
           <h1 className="text-xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
             <BarChart3 className="w-5 h-5 text-indigo-600" />
-            Analytics & Placement Intelligence ({currentRole.toUpperCase()})
+            View Analytics ({currentRole === 'recruiter' ? 'EMPLOYER' : currentRole.toUpperCase()})
           </h1>
           <p className="text-xs text-slate-500 mt-0.5">
             Real-time data telemetry for talent acquisition velocity, curriculum gap bridging, and employment outcomes.

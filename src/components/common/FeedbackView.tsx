@@ -31,7 +31,7 @@ export const FeedbackView: React.FC = () => {
         <div>
           <h1 className="text-xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
             <MessageSquareHeart className="w-5 h-5 text-rose-500" />
-            Stakeholder Feedback & Quality Ratings
+            Collect Feedback
           </h1>
           <p className="text-xs text-slate-500 mt-0.5">
             Transparent institutional ratings collected after applications, interviews, counseling, and alumni mentorship.

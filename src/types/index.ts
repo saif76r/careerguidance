@@ -78,6 +78,11 @@ export interface Application {
   studentName: string;
   studentEmail: string;
   studentUniversity: string;
+  studentAvatar?: string;
+  studentDegree?: string;
+  studentGpa?: string;
+  studentSkills?: string[];
+  studentResumeName?: string;
   matchScore: number;
   appliedDate: string;
   status: ApplicationStatus;

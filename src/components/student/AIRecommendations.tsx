@@ -27,6 +27,55 @@ export const AIRecommendations: React.FC = () => {
   } = useApp();
 
   const [filterType, setFilterType] = useState<'all' | 'internship' | 'fulltime'>('all');
+  const [analysisLoadingId, setAnalysisLoadingId] = useState<string | null>(null);
+  const [jobAiAnalysis, setJobAiAnalysis] = useState<Record<string, {
+    matchScore: number;
+    rationale: string;
+    matchingCompetencies: string[];
+    growthAreas: string[];
+    interviewTips: string[];
+    poweredBy?: string;
+  }>>({});
+
+  const handleRunAiAnalysis = async (job: any) => {
+    setAnalysisLoadingId(job.id);
+    try {
+      const res = await fetch('/api/gemini/match-explanation', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          student: {
+            name: currentUser.name,
+            degree: currentUser.degree,
+            skills: resume.extractedSkills,
+            gpa: currentUser.gpa || '3.86',
+          },
+          job: {
+            title: job.title,
+            company: job.company,
+            type: job.type,
+            requiredSkills: job.requiredSkills,
+            description: job.description,
+          },
+        }),
+      });
+
+      const json = await res.json();
+      if (json.success && json.data) {
+        setJobAiAnalysis(prev => ({
+          ...prev,
+          [job.id]: {
+            ...json.data,
+            poweredBy: json.poweredBy,
+          },
+        }));
+      }
+    } catch (err) {
+      console.error('Error generating AI match explanation:', err);
+    } finally {
+      setAnalysisLoadingId(null);
+    }
+  };
 
   const recommendedJobs = jobs
     .filter(j => (j.matchScore || 0) >= 75)
@@ -46,7 +95,7 @@ export const AIRecommendations: React.FC = () => {
             Academic Requisitions Matching: {currentUser.major}
           </div>
           <h1 className="text-xl sm:text-2xl font-bold tracking-tight">
-            Recommended Opportunities
+            View Recommendations
           </h1>
           <p className="text-xs text-slate-300 mt-1 max-w-xl leading-relaxed">
             Positions matched to your academic background in {currentUser.degree} and verified coursework.
@@ -149,6 +198,14 @@ export const AIRecommendations: React.FC = () => {
 
                 <div className="flex items-center gap-2 shrink-0">
                   <button
+                    onClick={() => handleRunAiAnalysis(job)}
+                    disabled={analysisLoadingId === job.id}
+                    className="px-3 py-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-xs font-semibold rounded-lg transition-colors border border-indigo-200 flex items-center gap-1.5 cursor-pointer shadow-2xs"
+                  >
+                    <Sparkles className={`w-3.5 h-3.5 ${analysisLoadingId === job.id ? 'animate-spin' : ''}`} />
+                    <span>{analysisLoadingId === job.id ? 'Analyzing...' : 'Gemini Fit Breakdown'}</span>
+                  </button>
+                  <button
                     onClick={() => toggleSaveJob(job.id)}
                     className={`p-2.5 rounded-lg border transition-colors ${
                       isSaved 
@@ -177,6 +234,60 @@ export const AIRecommendations: React.FC = () => {
                   )}
                 </div>
               </div>
+
+              {/* Gemini AI Deep Assessment Result */}
+              {jobAiAnalysis[job.id] && (
+                <div className="p-4 bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white rounded-xl space-y-3 border border-slate-800">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <Sparkles className="w-4 h-4 text-amber-400" />
+                      <span className="text-xs font-bold uppercase tracking-wider text-amber-300">
+                        Gemini AI Candidate Fit Decomposition · {jobAiAnalysis[job.id].matchScore}% Match
+                      </span>
+                    </div>
+                    <span className="text-[10px] font-mono text-slate-300 bg-white/10 px-2 py-0.5 rounded">
+                      {jobAiAnalysis[job.id].poweredBy || 'Gemini 3.8 Flash'}
+                    </span>
+                  </div>
+
+                  <p className="text-xs text-slate-200 leading-relaxed bg-white/5 p-3 rounded-lg border border-white/10">
+                    {jobAiAnalysis[job.id].rationale}
+                  </p>
+
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5 text-xs">
+                    <div className="p-2.5 bg-white/5 rounded-lg border border-white/10 space-y-1">
+                      <div className="font-bold text-emerald-400 text-[11px]">Direct Matching Skills</div>
+                      <div className="flex flex-wrap gap-1 pt-1">
+                        {jobAiAnalysis[job.id].matchingCompetencies.map((c, i) => (
+                          <span key={i} className="text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-1.5 py-0.5 rounded font-mono">
+                            {c}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="p-2.5 bg-white/5 rounded-lg border border-white/10 space-y-1">
+                      <div className="font-bold text-amber-400 text-[11px]">Suggested Prep Areas</div>
+                      <div className="flex flex-wrap gap-1 pt-1">
+                        {jobAiAnalysis[job.id].growthAreas.map((g, i) => (
+                          <span key={i} className="text-[10px] bg-amber-500/20 text-amber-300 border border-amber-500/30 px-1.5 py-0.5 rounded font-mono">
+                            {g}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="p-2.5 bg-white/5 rounded-lg border border-white/10 space-y-1">
+                      <div className="font-bold text-sky-400 text-[11px]">Interview Focus Tips</div>
+                      <ul className="text-[10px] text-slate-300 space-y-1 pt-1">
+                        {jobAiAnalysis[job.id].interviewTips.map((tip, i) => (
+                          <li key={i} className="line-clamp-2">💡 {tip}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              )}
 
               {/* WHY THIS OPPORTUNITY MATCHES YOU (CRITICAL PROMPT REQUIREMENT) */}
               <div className="p-4 bg-indigo-50/50 border border-indigo-100/90 rounded-xl space-y-2">

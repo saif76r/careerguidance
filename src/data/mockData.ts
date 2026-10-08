@@ -232,21 +232,157 @@ export const initialApplications: Application[] = [
     studentName: 'Sarah Rahman',
     studentEmail: 'sarah.rahman@diu.edu.bd',
     studentUniversity: 'Daffodil International University',
+    studentDegree: 'B.Sc. CSE (Senior, Class of 2026)',
+    studentGpa: 'CGPA 3.86',
+    studentAvatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=256&q=80',
+    studentSkills: ['Java', 'React', 'SQL', 'Git', 'REST APIs', 'Python'],
+    studentResumeName: 'Sarah_Rahman_Software_Engineering_Resume.pdf',
     matchScore: 94,
     appliedDate: '2026-10-03',
     status: 'Shortlisted',
     timeline: [
       { stage: 'Applied', date: '2026-10-03', completed: true, note: 'Application submitted with AI-verified resume' },
-      { stage: 'Under Review', date: '2026-10-05', completed: true, note: 'AI resume parsed and matched 94%' },
+      { stage: 'Under Review', date: '2026-10-05', completed: true, note: 'Candidate profile verified and matched to role requirements' },
       { stage: 'Shortlisted', date: '2026-10-07', completed: true, note: 'Shortlisted by Recruiter Elena Rostova' },
       { stage: 'Interview', date: '2026-10-12', completed: false, note: 'Technical screen scheduled with Cloud Team Lead' },
-      { stage: 'Accepted', date: 'TBD', completed: false }
+      { stage: 'Accepted', date: 'Pending', completed: false }
     ],
     interviewDate: '2026-10-12 at 3:00 PM GMT+6',
-    notes: 'Strong candidate with clean React projects and solid academic standing in OOP.'
+    notes: 'Strong candidate with clean React projects, Java OOP mastery, and high academic standing.'
   },
   {
     id: 'app_2',
+    jobId: 'job_1',
+    jobTitle: 'Cloud Software Engineering Intern',
+    company: 'NovaTech Solutions',
+    studentId: 'usr_student_2',
+    studentName: 'Nabil Hasan',
+    studentEmail: 'nabil.h@diu.edu.bd',
+    studentUniversity: 'BUET / DIU Exchange',
+    studentDegree: 'B.Sc. Software Engineering',
+    studentGpa: 'CGPA 3.78',
+    studentAvatar: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=256&q=80',
+    studentSkills: ['Java', 'Docker', 'SQL', 'Git', 'Linux'],
+    studentResumeName: 'Nabil_Hasan_SWE_Resume.pdf',
+    matchScore: 92,
+    appliedDate: '2026-10-04',
+    status: 'Under Review',
+    timeline: [
+      { stage: 'Applied', date: '2026-10-04', completed: true, note: 'Direct submission via university portal' },
+      { stage: 'Under Review', date: '2026-10-06', completed: true, note: 'Backend containerization microservices verified' },
+      { stage: 'Shortlisted', date: 'Pending', completed: false },
+      { stage: 'Interview', date: 'Pending', completed: false },
+      { stage: 'Accepted', date: 'Pending', completed: false }
+    ],
+    notes: 'Competitive programming finalist with proven container orchestration skills.'
+  },
+  {
+    id: 'app_3',
+    jobId: 'job_1',
+    jobTitle: 'Cloud Software Engineering Intern',
+    company: 'NovaTech Solutions',
+    studentId: 'usr_student_3',
+    studentName: 'Fariha Anjum',
+    studentEmail: 'fariha.anjum@diu.edu.bd',
+    studentUniversity: 'Daffodil International University',
+    studentDegree: 'B.Sc. Computer Science',
+    studentGpa: 'CGPA 3.72',
+    studentAvatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=256&q=80',
+    studentSkills: ['React', 'Python', 'SQL', 'Git', 'JavaScript'],
+    studentResumeName: 'Fariha_Anjum_Frontend_Resume.pdf',
+    matchScore: 88,
+    appliedDate: '2026-10-02',
+    status: 'Interview',
+    timeline: [
+      { stage: 'Applied', date: '2026-10-02', completed: true, note: 'Application received' },
+      { stage: 'Under Review', date: '2026-10-03', completed: true, note: 'Portfolio and repository assessment approved' },
+      { stage: 'Shortlisted', date: '2026-10-05', completed: true, note: 'Shortlisted for technical round' },
+      { stage: 'Interview', date: '2026-10-15', completed: true, note: 'Video interview scheduled with engineering panel' },
+      { stage: 'Accepted', date: 'Pending', completed: false }
+    ],
+    interviewDate: '2026-10-15 at 11:00 AM GMT+6',
+    notes: 'Frontend club lead; demonstrated exceptional React architecture & REST knowledge.'
+  },
+  {
+    id: 'app_4',
+    jobId: 'job_1',
+    jobTitle: 'Cloud Software Engineering Intern',
+    company: 'NovaTech Solutions',
+    studentId: 'usr_student_4',
+    studentName: 'Zubair Al-Mamun',
+    studentEmail: 'zubair.mamun@northsouth.edu',
+    studentUniversity: 'North South University',
+    studentDegree: 'B.Sc. Computer Science',
+    studentGpa: 'CGPA 3.55',
+    studentAvatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=256&q=80',
+    studentSkills: ['Java', 'SQL', 'Linux', 'Bash'],
+    studentResumeName: 'Zubair_AlMamun_Resume.pdf',
+    matchScore: 81,
+    appliedDate: '2026-10-06',
+    status: 'Applied',
+    timeline: [
+      { stage: 'Applied', date: '2026-10-06', completed: true, note: 'Initial application submitted' },
+      { stage: 'Under Review', date: 'Pending', completed: false },
+      { stage: 'Shortlisted', date: 'Pending', completed: false },
+      { stage: 'Interview', date: 'Pending', completed: false },
+      { stage: 'Accepted', date: 'Pending', completed: false }
+    ],
+    notes: 'Application in initial screening queue.'
+  },
+  {
+    id: 'app_5',
+    jobId: 'job_4',
+    jobTitle: 'DevOps & Site Reliability Intern',
+    company: 'ScaleGrid Systems',
+    studentId: 'usr_student_5',
+    studentName: 'Tariqul Islam',
+    studentEmail: 'tariqul.islam@diu.edu.bd',
+    studentUniversity: 'Daffodil International University',
+    studentDegree: 'B.Sc. Software Engineering',
+    studentGpa: 'CGPA 3.80',
+    studentAvatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=256&q=80',
+    studentSkills: ['Linux', 'Docker', 'Kubernetes', 'AWS', 'Bash', 'Git'],
+    studentResumeName: 'Tariqul_Islam_DevOps_CV.pdf',
+    matchScore: 89,
+    appliedDate: '2026-10-05',
+    status: 'Shortlisted',
+    timeline: [
+      { stage: 'Applied', date: '2026-10-05', completed: true, note: 'Submitted via campus placements' },
+      { stage: 'Under Review', date: '2026-10-06', completed: true, note: 'CDC Docker badge verified' },
+      { stage: 'Shortlisted', date: '2026-10-07', completed: true, note: 'Shortlisted for infrastructure cohort' },
+      { stage: 'Interview', date: 'Pending', completed: false },
+      { stage: 'Accepted', date: 'Pending', completed: false }
+    ],
+    notes: 'Completed CDC Docker bootcamp with honors. Great Linux and automation foundation.'
+  },
+  {
+    id: 'app_6',
+    jobId: 'job_5',
+    jobTitle: 'Frontend React Engineer',
+    company: 'Veloce Commerce',
+    studentId: 'usr_student_6',
+    studentName: 'Nafisa Chowdhury',
+    studentEmail: 'nafisa.c@diu.edu.bd',
+    studentUniversity: 'Daffodil International University',
+    studentDegree: 'B.Sc. CSE',
+    studentGpa: 'CGPA 3.91',
+    studentAvatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=256&q=80',
+    studentSkills: ['React', 'TypeScript', 'Next.js', 'Tailwind CSS', 'REST APIs'],
+    studentResumeName: 'Nafisa_Chowdhury_React_CV.pdf',
+    matchScore: 93,
+    appliedDate: '2026-10-01',
+    status: 'Accepted',
+    timeline: [
+      { stage: 'Applied', date: '2026-10-01', completed: true, note: 'Application received' },
+      { stage: 'Under Review', date: '2026-10-02', completed: true, note: 'Portfolio review 10/10' },
+      { stage: 'Shortlisted', date: '2026-10-03', completed: true, note: 'Fast-tracked to final round' },
+      { stage: 'Interview', date: '2026-10-05', completed: true, note: 'Technical evaluation passed with distinction' },
+      { stage: 'Accepted', date: '2026-10-07', completed: true, note: 'Campus offer letter issued and signed' }
+    ],
+    notes: 'Top tier UI engineer with production Next.js experience.'
+  },
+  {
+    id: 'app_7',
     jobId: 'job_2',
     jobTitle: 'Full-Stack Developer (Graduate Role)',
     company: 'Apex Digital Labs',
@@ -254,6 +390,11 @@ export const initialApplications: Application[] = [
     studentName: 'Sarah Rahman',
     studentEmail: 'sarah.rahman@diu.edu.bd',
     studentUniversity: 'Daffodil International University',
+    studentDegree: 'B.Sc. CSE (Senior, Class of 2026)',
+    studentGpa: 'CGPA 3.86',
+    studentAvatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=256&q=80',
+    studentSkills: ['Java', 'React', 'SQL', 'Git', 'Node.js'],
+    studentResumeName: 'Sarah_Rahman_Software_Engineering_Resume.pdf',
     matchScore: 91,
     appliedDate: '2026-09-29',
     status: 'Under Review',
@@ -263,10 +404,11 @@ export const initialApplications: Application[] = [
       { stage: 'Shortlisted', date: 'Pending', completed: false },
       { stage: 'Interview', date: 'Pending', completed: false },
       { stage: 'Accepted', date: 'Pending', completed: false }
-    ]
+    ],
+    notes: 'Strong candidate with fullstack lab projects.'
   },
   {
-    id: 'app_3',
+    id: 'app_8',
     jobId: 'job_3',
     jobTitle: 'AI/ML Engineering Trainee',
     company: 'CognitiveCore AI',
@@ -274,6 +416,11 @@ export const initialApplications: Application[] = [
     studentName: 'Sarah Rahman',
     studentEmail: 'sarah.rahman@diu.edu.bd',
     studentUniversity: 'Daffodil International University',
+    studentDegree: 'B.Sc. CSE (Senior, Class of 2026)',
+    studentGpa: 'CGPA 3.86',
+    studentAvatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=256&q=80',
+    studentSkills: ['Python', 'SQL', 'Machine Learning', 'Git'],
+    studentResumeName: 'Sarah_Rahman_Software_Engineering_Resume.pdf',
     matchScore: 86,
     appliedDate: '2026-10-06',
     status: 'Applied',
@@ -283,7 +430,8 @@ export const initialApplications: Application[] = [
       { stage: 'Shortlisted', date: 'Pending', completed: false },
       { stage: 'Interview', date: 'Pending', completed: false },
       { stage: 'Accepted', date: 'Pending', completed: false }
-    ]
+    ],
+    notes: 'AI coursework and Python foundations verified.'
   }
 ];
 
@@ -549,7 +697,7 @@ export const initialNotifications: NotificationItem[] = [
     id: 'notif_1',
     recipientRole: 'student',
     title: 'Application Shortlisted',
-    message: 'Your application for Cloud Software Engineering Intern at NovaTech Solutions has been shortlisted. Match score: 94%.',
+    message: 'Your application for Cloud Software Engineering Intern at NovaTech Solutions has been shortlisted by the recruiting team.',
     timestamp: '10 minutes ago',
     read: false,
     category: 'application'

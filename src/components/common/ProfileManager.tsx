@@ -108,7 +108,7 @@ export const ProfileManager: React.FC = () => {
         <div>
           <h1 className="text-xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
             <User className="w-5 h-5 text-indigo-600" />
-            Profile Management ({currentRole.toUpperCase()})
+            Manage Profile ({currentRole === 'recruiter' ? 'EMPLOYER' : currentRole.toUpperCase()})
           </h1>
           <p className="text-xs text-slate-500 mt-0.5">
             Maintain your institutional identity, academic credentials, and AI recommendation metadata.

@@ -84,7 +84,7 @@ export const Header: React.FC = () => {
           title="Collect Feedback"
         >
           <MessageSquareHeart className="w-3.5 h-3.5 text-rose-500" />
-          <span>Feedback</span>
+          <span>Collect Feedback</span>
         </button>
 
         {/* Notifications Icon with Unread Count */}

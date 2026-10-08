@@ -35,7 +35,7 @@ export const StudentApplications: React.FC = () => {
         <div>
           <h1 className="text-xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
             <Briefcase className="w-5 h-5 text-indigo-600" />
-            Application Tracking & Visual Timeline
+            Track Applications
           </h1>
           <p className="text-xs text-slate-500 mt-0.5">
             Monitor real-time employer review progression from initial AI match to technical interview and offer letter.

@@ -80,35 +80,37 @@ export const StudentDashboard: React.FC = () => {
           <div className="mt-3 text-[11px] text-slate-500 flex items-center justify-between">
             <span>CGPA: {currentUser.gpa}</span>
             <button onClick={() => setActiveTab('profile')} className="text-indigo-600 font-semibold hover:underline">
-              Edit Profile
+              Manage Profile
             </button>
           </div>
         </div>
 
-        {/* Resume Status */}
+        {/* Active Resume */}
         <div className="p-4 bg-white border border-slate-200 rounded-xl">
           <div className="flex items-center justify-between text-xs text-slate-500 font-medium">
-            <span>Resume Status</span>
-            <span className="text-[10px] font-bold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-100">
-              {resume.status}
+            <span>Active Resume</span>
+            <span className="text-[10px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-100">
+              Verified
             </span>
           </div>
           <div className="mt-2 text-sm font-bold text-slate-900 truncate">
             {resume.fileName.replace('_Resume.pdf', '')}
           </div>
           <div className="mt-3 text-[11px] text-slate-500 flex items-center justify-between">
-            <span>Parser Confidence: {resume.confidenceScore}%</span>
+            <span>{resume.fileSize || '1.42 MB'} · Uploaded</span>
             <button onClick={() => setActiveTab('resume')} className="text-indigo-600 font-semibold hover:underline">
-              Manage Resume
+              Upload Resume
             </button>
           </div>
         </div>
 
-        {/* Top AI Match */}
+        {/* Matched Roles */}
         <div className="p-4 bg-white border border-slate-200 rounded-xl">
           <div className="flex items-center justify-between text-xs text-slate-500 font-medium">
-            <span>Top Match Score</span>
-            <span className="font-bold text-indigo-600">94%</span>
+            <span>Matched Roles</span>
+            <span className="text-xs font-bold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded">
+              {recommendedJobs.length} Available
+            </span>
           </div>
           <div className="mt-2 text-sm font-bold text-slate-900 truncate">
             NovaTech Solutions
@@ -116,7 +118,7 @@ export const StudentDashboard: React.FC = () => {
           <div className="mt-3 text-[11px] text-slate-500 flex items-center justify-between">
             <span>Cloud Engineering Intern</span>
             <button onClick={() => setActiveTab('recommendations')} className="text-indigo-600 font-semibold hover:underline">
-              View
+              View Recommendations
             </button>
           </div>
         </div>
@@ -134,7 +136,7 @@ export const StudentDashboard: React.FC = () => {
           <div className="mt-3 text-[11px] text-slate-500 flex items-center justify-between">
             <span>1 Under Review</span>
             <button onClick={() => setActiveTab('applications')} className="text-indigo-600 font-semibold hover:underline">
-              Track All
+              Track Applications
             </button>
           </div>
         </div>
@@ -153,7 +155,7 @@ export const StudentDashboard: React.FC = () => {
               onClick={() => setActiveTab('recommendations')}
               className="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1"
             >
-              See all recommendations <ArrowRight className="w-3 h-3" />
+              View Recommendations <ArrowRight className="w-3 h-3" />
             </button>
           </div>
 
@@ -168,8 +170,8 @@ export const StudentDashboard: React.FC = () => {
                 >
                   <div className="space-y-1.5">
                     <div className="flex items-center gap-2">
-                      <span className="text-xs font-bold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-100">
-                        {job.matchScore}% Match
+                      <span className="text-xs font-semibold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-100">
+                        Recommended
                       </span>
                       <span className="text-xs text-slate-400">·</span>
                       <span className="text-xs text-slate-500">{job.type}</span>

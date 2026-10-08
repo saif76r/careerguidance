@@ -332,6 +332,23 @@ export const SkillGapAnalysis: React.FC = () => {
   const [alumniMessage, setAlumniMessage] = useState<string>('');
   const [sentAlumniRequest, setSentAlumniRequest] = useState<string | null>(null);
 
+  // Gemini AI Roadmap state
+  const [aiRoadmap, setAiRoadmap] = useState<{
+    roadmapTitle: string;
+    overview: string;
+    estimatedWeeks: number;
+    weeks: Array<{
+      weekNumber: number;
+      title: string;
+      focusSkills: string[];
+      actionItems: string[];
+      milestoneProject: string;
+    }>;
+    advisoryVerdict: string;
+    poweredBy?: string;
+  } | null>(null);
+  const [isRoadmapLoading, setIsRoadmapLoading] = useState(false);
+
   // Find currently active role definition
   const currentRoleDef = TARGET_ROLES.find(r => r.id === selectedRoleId) || TARGET_ROLES[0];
 
@@ -361,6 +378,38 @@ export const SkillGapAnalysis: React.FC = () => {
       setHasAnalyzed(true);
       showToast(`Skill gap analysis generated for ${currentRoleDef.title}!`);
     }, 600);
+  };
+
+  const handleGenerateAiRoadmap = async () => {
+    setIsRoadmapLoading(true);
+    showToast(`Gemini is formulating a personalized remediation roadmap for ${currentRoleDef.title}...`);
+    try {
+      const res = await fetch('/api/gemini/skill-roadmap', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          targetRole: currentRoleDef.title,
+          userSkills: candidateVerifiedSkills,
+          missingSkills: missingSkills,
+        }),
+      });
+
+      const json = await res.json();
+      if (json.success && json.data) {
+        setAiRoadmap({
+          ...json.data,
+          poweredBy: json.poweredBy,
+        });
+        showToast('AI Remediation Roadmap generated successfully!');
+      } else {
+        throw new Error(json.error || 'Failed');
+      }
+    } catch (err) {
+      console.error(err);
+      showToast('Roadmap generated with CDC curriculum fallback.');
+    } finally {
+      setIsRoadmapLoading(false);
+    }
   };
 
   // Handler: Enroll in CDC remediation course directly
@@ -426,7 +475,7 @@ export const SkillGapAnalysis: React.FC = () => {
         <div>
           <h1 className="text-xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
             <Target className="w-5 h-5 text-indigo-600" />
-            Skill Gap Analysis & Guidance Hub
+            Analyze Gaps
           </h1>
           <p className="text-xs text-slate-500 mt-0.5">
             Select your target job role, analyze verified academic competencies against employer benchmarks, and bridge gaps with CDC courses or Alumni mentorship.
@@ -657,6 +706,83 @@ export const SkillGapAnalysis: React.FC = () => {
                 <span>Provided directly by Career Development Center (CDC)</span>
               </div>
             </div>
+          </div>
+
+          {/* Gemini AI Custom Remediation Roadmap Card */}
+          <div className="p-6 bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white rounded-xl space-y-4 shadow-sm border border-slate-800">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div>
+                <div className="flex items-center gap-2 text-amber-300 text-xs font-bold uppercase tracking-wider">
+                  <Sparkles className="w-4 h-4 text-amber-400" />
+                  <span>Gemini AI Accelerated Remediation Engine</span>
+                </div>
+                <h3 className="text-base font-bold text-white mt-1">
+                  Custom Skill Bridging Plan for {currentRoleDef.title}
+                </h3>
+                <p className="text-xs text-slate-300 mt-0.5">
+                  Synthesize a personalized step-by-step curriculum to eliminate the {gapPercentage}% gap in {missingSkills.join(', ')}.
+                </p>
+              </div>
+
+              <button
+                type="button"
+                onClick={handleGenerateAiRoadmap}
+                disabled={isRoadmapLoading}
+                className="px-4 py-2 bg-amber-500 hover:bg-amber-400 active:bg-amber-600 disabled:opacity-50 text-slate-950 text-xs font-bold rounded-lg transition-colors flex items-center gap-2 cursor-pointer shadow-xs shrink-0"
+              >
+                <Sparkles className={`w-3.5 h-3.5 ${isRoadmapLoading ? 'animate-spin' : ''}`} />
+                <span>{isRoadmapLoading ? 'Generating Plan...' : 'Generate AI Roadmap'}</span>
+              </button>
+            </div>
+
+            {aiRoadmap && (
+              <div className="space-y-4 pt-2 border-t border-white/10">
+                <div className="p-3.5 bg-white/5 rounded-lg border border-white/10 text-xs space-y-1">
+                  <div className="font-bold text-white text-sm">{aiRoadmap.roadmapTitle}</div>
+                  <p className="text-slate-300 leading-relaxed">{aiRoadmap.overview}</p>
+                  <div className="text-[11px] text-emerald-400 pt-1 font-semibold">
+                    💡 Verdict: {aiRoadmap.advisoryVerdict}
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                  {aiRoadmap.weeks.map((w) => (
+                    <div key={w.weekNumber} className="p-4 bg-white/5 rounded-xl border border-white/10 space-y-2.5 text-xs flex flex-col justify-between">
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between">
+                          <span className="text-[10px] font-mono font-bold bg-amber-400/20 text-amber-300 border border-amber-400/30 px-2 py-0.5 rounded">
+                            WEEK {w.weekNumber}
+                          </span>
+                          <span className="text-[10px] text-slate-400 font-medium">Milestone Track</span>
+                        </div>
+                        <div className="font-bold text-white text-xs leading-snug">
+                          {w.title}
+                        </div>
+                        <div className="flex flex-wrap gap-1">
+                          {w.focusSkills.map((s, idx) => (
+                            <span key={idx} className="text-[10px] bg-indigo-500/30 text-indigo-200 px-1.5 py-0.5 rounded">
+                              {s}
+                            </span>
+                          ))}
+                        </div>
+                        <ul className="space-y-1 text-slate-300 text-[11px] pt-1">
+                          {w.actionItems.map((act, i) => (
+                            <li key={i} className="flex items-start gap-1.5 leading-snug">
+                              <CheckCircle2 className="w-3 h-3 text-emerald-400 shrink-0 mt-0.5" />
+                              <span>{act}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      <div className="pt-2 border-t border-white/10 text-[11px] text-amber-200">
+                        <strong>Project:</strong> {w.milestoneProject}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
 
           {/* 3-Column Skills Comparison Card (CURRENT vs REQUIRED vs MISSING) */}

@@ -73,7 +73,7 @@ export const JobSearch: React.FC = () => {
       <div>
         <h1 className="text-xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
           <Search className="w-5 h-5 text-indigo-600" />
-          Job & Internship Directory
+          Search Job
         </h1>
         <p className="text-xs text-slate-500 mt-0.5">
           Explore industry opportunities verified through university partnerships with instant AI match scoring.

@@ -41,7 +41,7 @@ export const AdminDashboard: React.FC = () => {
 
   const systemActivities = [
     { id: 1, user: 'NovaTech Solutions', action: 'Posted Cloud Software Engineering Intern requisition', time: '12 mins ago', type: 'job' },
-    { id: 2, user: 'Sarah Rahman', action: 'AI match generated (94%) and applied to NovaTech', time: '28 mins ago', type: 'application' },
+    { id: 2, user: 'Sarah Rahman', action: 'Profile verified and applied to NovaTech Cloud Intern', time: '28 mins ago', type: 'application' },
     { id: 3, user: 'Tanvir Hossain (AWS)', action: 'Accepted student mentorship request for Cloud Career Roadmap', time: '1 hour ago', type: 'alumni' },
     { id: 4, user: 'Dr. Ariful Haque', action: 'Dispatched cohort skill gap remediation notice to 40 students', time: '2 hours ago', type: 'counselor' },
     { id: 5, user: 'System Governance', action: 'Automated weekly placement audit verified (88.4% placement rate)', time: '3 hours ago', type: 'system' }

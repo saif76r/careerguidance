@@ -20,8 +20,7 @@ import {
   GraduationCap, 
   BookOpenCheck,
   CheckCircle2,
-  FolderGit2,
-  BookOpen
+  FolderGit2
 } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 import { UserRole } from '../../types';
@@ -42,8 +41,7 @@ export const Sidebar: React.FC = () => {
     setIsNotifDrawerOpen, 
     openFeedbackModal,
     applications,
-    jobs,
-    cdcCourses
+    jobs
   } = useApp();
 
   const getSidebarItems = (role: UserRole): SidebarItem[] => {
@@ -51,56 +49,51 @@ export const Sidebar: React.FC = () => {
       case 'student':
         return [
           { id: 'dashboard', label: 'Dashboard', icon: <LayoutDashboard className="w-4 h-4" /> },
-          { id: 'profile', label: 'My Profile', icon: <User className="w-4 h-4" /> },
-          { id: 'resume', label: 'Resume', icon: <FileText className="w-4 h-4" />, badge: 'AI Parsed' },
-          { id: 'search_jobs', label: 'Search Jobs', icon: <Search className="w-4 h-4" /> },
-          { id: 'recommendations', label: 'AI Recommendations', icon: <Sparkles className="w-4 h-4" />, badge: '94% Match' },
-          { id: 'skill_gap', label: 'Skill Gap Analysis', icon: <Target className="w-4 h-4" /> },
-          { id: 'applications', label: 'Applications', icon: <Briefcase className="w-4 h-4" />, badge: applications.length },
+          { id: 'profile', label: 'Manage Profile', icon: <User className="w-4 h-4" /> },
+          { id: 'resume', label: 'Upload Resume', icon: <FileText className="w-4 h-4" /> },
+          { id: 'search_jobs', label: 'Search Job', icon: <Search className="w-4 h-4" /> },
+          { id: 'recommendations', label: 'View Recommendations', icon: <Sparkles className="w-4 h-4" /> },
+          { id: 'skill_gap', label: 'Analyze Gaps', icon: <Target className="w-4 h-4" /> },
+          { id: 'applications', label: 'Track Applications', icon: <Briefcase className="w-4 h-4" />, badge: applications.length },
           { id: 'alumni_connect', label: 'Alumni Connect', icon: <Users className="w-4 h-4" /> },
           { id: 'notifications', label: 'Notifications', icon: <Bell className="w-4 h-4" />, badge: unreadNotifCount || undefined },
-          { id: 'feedback', label: 'Feedback', icon: <MessageSquareHeart className="w-4 h-4" /> },
+          { id: 'feedback', label: 'Collect Feedback', icon: <MessageSquareHeart className="w-4 h-4" /> },
           { id: 'settings', label: 'Settings', icon: <Settings className="w-4 h-4" /> },
         ];
 
       case 'alumni':
         return [
           { id: 'dashboard', label: 'Dashboard', icon: <LayoutDashboard className="w-4 h-4" /> },
-          { id: 'profile', label: 'My Profile', icon: <User className="w-4 h-4" /> },
-          { id: 'alumni_connect', label: 'Alumni Connect', icon: <Users className="w-4 h-4" /> },
-          { id: 'connections', label: 'Students / Connections', icon: <GraduationCap className="w-4 h-4" />, badge: 2 },
-          { id: 'opportunities', label: 'Opportunities', icon: <Briefcase className="w-4 h-4" /> },
+          { id: 'profile', label: 'Manage Profile', icon: <User className="w-4 h-4" /> },
+          { id: 'opportunities', label: 'Search Job', icon: <Briefcase className="w-4 h-4" /> },
           { id: 'notifications', label: 'Notifications', icon: <Bell className="w-4 h-4" />, badge: unreadNotifCount || undefined },
-          { id: 'feedback', label: 'Feedback', icon: <MessageSquareHeart className="w-4 h-4" /> },
+          { id: 'feedback', label: 'Collect Feedback', icon: <MessageSquareHeart className="w-4 h-4" /> },
           { id: 'settings', label: 'Settings', icon: <Settings className="w-4 h-4" /> },
         ];
 
       case 'recruiter':
         return [
           { id: 'dashboard', label: 'Dashboard', icon: <LayoutDashboard className="w-4 h-4" /> },
-          { id: 'profile', label: 'Company Profile', icon: <Building2 className="w-4 h-4" /> },
-          { id: 'post_job', label: 'Post Job / Internship', icon: <PlusCircle className="w-4 h-4" /> },
-          { id: 'opportunities', label: 'My Opportunities', icon: <Briefcase className="w-4 h-4" />, badge: jobs.length },
-          { id: 'candidates', label: 'Candidates', icon: <Users className="w-4 h-4" /> },
-          { id: 'candidate_ranking', label: 'AI Candidate Ranking', icon: <Award className="w-4 h-4" />, badge: 'Top #1' },
-          { id: 'applications', label: 'Applications', icon: <FolderGit2 className="w-4 h-4" /> },
-          { id: 'analytics', label: 'Analytics', icon: <BarChart3 className="w-4 h-4" /> },
+          { id: 'profile', label: 'Manage Profile', icon: <Building2 className="w-4 h-4" /> },
+          { id: 'post_job', label: 'Post Jobs', icon: <PlusCircle className="w-4 h-4" /> },
+          { id: 'candidate_ranking', label: 'Rank Candidates', icon: <Award className="w-4 h-4" />, badge: 'Top #1' },
+          { id: 'applications', label: 'Track Applications', icon: <FolderGit2 className="w-4 h-4" />, badge: applications.length },
+          { id: 'analytics', label: 'View Analytics', icon: <BarChart3 className="w-4 h-4" /> },
           { id: 'notifications', label: 'Notifications', icon: <Bell className="w-4 h-4" />, badge: unreadNotifCount || undefined },
-          { id: 'feedback', label: 'Feedback', icon: <MessageSquareHeart className="w-4 h-4" /> },
+          { id: 'feedback', label: 'Collect Feedback', icon: <MessageSquareHeart className="w-4 h-4" /> },
           { id: 'settings', label: 'Settings', icon: <Settings className="w-4 h-4" /> },
         ];
 
       case 'counselor':
         return [
           { id: 'dashboard', label: 'Dashboard', icon: <LayoutDashboard className="w-4 h-4" /> },
-          { id: 'profile', label: 'My Profile', icon: <User className="w-4 h-4" /> },
+          { id: 'profile', label: 'Manage Profile', icon: <User className="w-4 h-4" /> },
           { id: 'students', label: 'Students', icon: <GraduationCap className="w-4 h-4" />, badge: 342 },
           { id: 'career_guidance', label: 'Career Guidance', icon: <Compass className="w-4 h-4" /> },
-          { id: 'cdc_courses', label: 'CDC Course Offerings', icon: <BookOpen className="w-4 h-4" />, badge: cdcCourses.length },
-          { id: 'recommendations', label: 'Recommendations', icon: <Sparkles className="w-4 h-4" /> },
-          { id: 'analytics', label: 'Analytics', icon: <BarChart3 className="w-4 h-4" /> },
+          { id: 'recommendations', label: 'View Recommendations', icon: <Sparkles className="w-4 h-4" /> },
+          { id: 'analytics', label: 'View Analytics', icon: <BarChart3 className="w-4 h-4" /> },
           { id: 'notifications', label: 'Notifications', icon: <Bell className="w-4 h-4" />, badge: unreadNotifCount || undefined },
-          { id: 'feedback', label: 'Feedback', icon: <MessageSquareHeart className="w-4 h-4" /> },
+          { id: 'feedback', label: 'Collect Feedback', icon: <MessageSquareHeart className="w-4 h-4" /> },
           { id: 'settings', label: 'Settings', icon: <Settings className="w-4 h-4" /> },
         ];
 
@@ -113,10 +106,10 @@ export const Sidebar: React.FC = () => {
           { id: 'employers', label: 'Employers', icon: <Building2 className="w-4 h-4" /> },
           { id: 'career_counselors', label: 'Career Counselors', icon: <Compass className="w-4 h-4" /> },
           { id: 'jobs', label: 'Jobs & Internships', icon: <Briefcase className="w-4 h-4" />, badge: jobs.length },
-          { id: 'applications', label: 'Applications', icon: <CheckCircle2 className="w-4 h-4" /> },
-          { id: 'analytics', label: 'Analytics', icon: <BarChart3 className="w-4 h-4" /> },
+          { id: 'applications', label: 'Track Applications', icon: <CheckCircle2 className="w-4 h-4" /> },
+          { id: 'analytics', label: 'View Analytics', icon: <BarChart3 className="w-4 h-4" /> },
           { id: 'notifications', label: 'Notifications', icon: <Bell className="w-4 h-4" />, badge: unreadNotifCount || undefined },
-          { id: 'feedback', label: 'Feedback', icon: <MessageSquareHeart className="w-4 h-4" /> },
+          { id: 'feedback', label: 'Collect Feedback', icon: <MessageSquareHeart className="w-4 h-4" /> },
           { id: 'settings', label: 'Settings', icon: <Settings className="w-4 h-4" /> },
         ];
     }
@@ -153,7 +146,7 @@ export const Sidebar: React.FC = () => {
         {/* Sidebar Nav Items */}
         <nav className="space-y-1">
           {items.map((item) => {
-            const isActive = activeTab === item.id;
+            const isActive = activeTab === item.id || (item.id === 'career_guidance' && activeTab === 'cdc_courses');
             return (
               <button
                 key={item.id}

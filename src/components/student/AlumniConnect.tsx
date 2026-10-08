@@ -47,7 +47,7 @@ export const AlumniConnect: React.FC = () => {
         <div>
           <h1 className="text-xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
             <Users className="w-5 h-5 text-indigo-600" />
-            Alumni Connect & Mentorship Network
+            Alumni Connect
           </h1>
           <p className="text-xs text-slate-500 mt-0.5">
             Bridge academia and industry by connecting with university graduates at Amazon, Google, Microsoft, and Shopify.
