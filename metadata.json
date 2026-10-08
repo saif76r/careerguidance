@@ -1,0 +1,6 @@
+{
+  "name": "Industry-Academia: AI-Based Internship & Job Recommendation System",
+  "description": "Unified AI-powered recommendation, skill gap analysis, and candidate matching platform connecting Students, Alumni, Employers, Career Counselors, and Administrators.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
