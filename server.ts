@@ -106,7 +106,7 @@ Extract all technical competencies and programming languages, calculate a parsin
       }
 
       if (parsedData) {
-        return res.json({ success: true, data: parsedData, poweredBy: 'Gemini 3.8 Flash' });
+        return res.json({ success: true, data: parsedData, poweredBy: 'AI Career Engine' });
       }
 
       // Robust semantic fallback analyzing actual resume text
@@ -247,7 +247,7 @@ Provide a calculated match percentage (60-98), detailed explanation why the cand
       }
 
       if (parsed) {
-        return res.json({ success: true, data: parsed, poweredBy: 'Gemini 3.8 Flash' });
+        return res.json({ success: true, data: parsed, poweredBy: 'AI Alignment Engine' });
       }
 
       // Dynamic semantic calculation fallback
@@ -364,7 +364,7 @@ Formulate a structured 3-week plan focusing directly on closing the gap, includi
       }
 
       if (parsed) {
-        return res.json({ success: true, data: parsed, poweredBy: 'Gemini 3.8 Flash' });
+        return res.json({ success: true, data: parsed, poweredBy: 'AI Curriculum Engine' });
       }
 
       // Dynamic customized fallback

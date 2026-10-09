@@ -332,7 +332,7 @@ export const SkillGapAnalysis: React.FC = () => {
   const [alumniMessage, setAlumniMessage] = useState<string>('');
   const [sentAlumniRequest, setSentAlumniRequest] = useState<string | null>(null);
 
-  // Gemini AI Roadmap state
+  // AI Roadmap state
   const [aiRoadmap, setAiRoadmap] = useState<{
     roadmapTitle: string;
     overview: string;
@@ -382,7 +382,7 @@ export const SkillGapAnalysis: React.FC = () => {
 
   const handleGenerateAiRoadmap = async () => {
     setIsRoadmapLoading(true);
-    showToast(`Gemini is formulating a personalized remediation roadmap for ${currentRoleDef.title}...`);
+    showToast(`AI is formulating a personalized remediation roadmap for ${currentRoleDef.title}...`);
     try {
       const res = await fetch('/api/gemini/skill-roadmap', {
         method: 'POST',
@@ -708,13 +708,13 @@ export const SkillGapAnalysis: React.FC = () => {
             </div>
           </div>
 
-          {/* Gemini AI Custom Remediation Roadmap Card */}
+          {/* AI Custom Remediation Roadmap Card */}
           <div className="p-6 bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white rounded-xl space-y-4 shadow-sm border border-slate-800">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
                 <div className="flex items-center gap-2 text-amber-300 text-xs font-bold uppercase tracking-wider">
                   <Sparkles className="w-4 h-4 text-amber-400" />
-                  <span>Gemini AI Accelerated Remediation Engine</span>
+                  <span>AI Accelerated Remediation Engine</span>
                 </div>
                 <h3 className="text-base font-bold text-white mt-1">
                   Custom Skill Bridging Plan for {currentRoleDef.title}

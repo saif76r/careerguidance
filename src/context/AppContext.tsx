@@ -45,8 +45,8 @@ interface AppContextType {
   // Auth state
   isAuthenticated: boolean;
   setIsAuthenticated: (val: boolean) => void;
-  authScreen: 'login' | 'register' | 'forgot_password' | 'verify_email' | 'reset_password' | null;
-  setAuthScreen: (screen: 'login' | 'register' | 'forgot_password' | 'verify_email' | 'reset_password' | null) => void;
+  authScreen: 'landing' | 'login' | 'register' | 'forgot_password' | 'verify_email' | 'reset_password' | null;
+  setAuthScreen: (screen: 'landing' | 'login' | 'register' | 'forgot_password' | 'verify_email' | 'reset_password' | null) => void;
   registerStep: number;
   setRegisterStep: (step: number) => void;
   registerRole: UserRole | null;
@@ -113,9 +113,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [activeTab, setActiveTab] = useState<string>('dashboard');
   const [viewMode, setViewMode] = useState<ViewMode>('live_app');
   
-  // Auth state - registration is initial flow so user selects role at registration
+  // Auth state - landing page is shown first before login or registration
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-  const [authScreen, setAuthScreen] = useState<'login' | 'register' | 'forgot_password' | 'verify_email' | 'reset_password' | null>('register');
+  const [authScreen, setAuthScreen] = useState<'landing' | 'login' | 'register' | 'forgot_password' | 'verify_email' | 'reset_password' | null>('landing');
   const [registerStep, setRegisterStep] = useState<number>(1);
   const [registerRole, setRegisterRole] = useState<UserRole | null>(null);
   

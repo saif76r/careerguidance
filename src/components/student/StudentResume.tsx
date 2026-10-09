@@ -37,7 +37,7 @@ export const StudentResume: React.FC = () => {
     overrideText?: string
   ) => {
     setIsAnalyzing(true);
-    showToast('AI parser analyzing resume structure and extracting skills with Gemini...');
+    showToast('AI parser analyzing resume structure and extracting skills...');
 
     try {
       const payloadText = overrideText || customResumeText || `Candidate: Sarah Rahman, Senior Undergraduate in B.Sc. Software Engineering.
@@ -153,7 +153,7 @@ Projects: Developed scalable Cloud Microservices E-Commerce platform with React 
             className="px-3.5 py-1.5 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-lg transition-colors flex items-center gap-1.5 cursor-pointer shadow-xs"
           >
             <RefreshCw className={`w-3.5 h-3.5 ${isAnalyzing ? 'animate-spin' : ''}`} />
-            {isAnalyzing ? 'Analyzing with Gemini...' : 'Analyze Resume'}
+            {isAnalyzing ? 'Analyzing Resume...' : 'Analyze Resume'}
           </button>
         </div>
       </div>
@@ -163,7 +163,7 @@ Projects: Developed scalable Cloud Microservices E-Commerce platform with React 
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-indigo-900 flex items-center gap-1.5">
               <Sparkles className="w-4 h-4 text-indigo-600" />
-              Live Resume Text Analysis (Gemini 3.8 Flash)
+              Live Resume Text Analysis
             </span>
             <span className="text-[11px] text-indigo-700">Paste your coursework, projects, or bio</span>
           </div>
@@ -300,11 +300,11 @@ Projects: Developed scalable Cloud Microservices E-Commerce platform with React 
                 <div className="flex items-center gap-2">
                   <Sparkles className="w-4 h-4 text-amber-400" />
                   <span className="text-xs font-bold uppercase tracking-wider text-amber-300">
-                    Gemini AI Candidate Profile Assessment
+                    AI Candidate Profile Assessment
                   </span>
                 </div>
                 <span className="text-[10px] font-mono text-slate-300 bg-white/10 px-2 py-0.5 rounded">
-                  {aiInsights.poweredBy || 'Gemini 3.8 Flash'}
+                  {aiInsights.poweredBy || 'AI Career Engine'}
                 </span>
               </div>
 

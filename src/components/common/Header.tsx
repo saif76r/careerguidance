@@ -53,7 +53,7 @@ export const Header: React.FC = () => {
 
   const handleLogout = () => {
     setIsAuthenticated(false);
-    setAuthScreen('login');
+    setAuthScreen('landing');
   };
 
   return (

@@ -31,7 +31,8 @@ export const AuthFlow: React.FC = () => {
     setCurrentRole, 
     setIsAuthenticated,
     showToast,
-    updateCurrentUser
+    updateCurrentUser,
+    jobs
   } = useApp();
 
   // Local form states
@@ -139,36 +140,568 @@ export const AuthFlow: React.FC = () => {
     showToast(`Welcome! Registered as ${registerRole.toUpperCase()}. Role dashboard loaded.`);
   };
 
+  const handleStartRegistrationWithRole = (role: UserRole | null = null) => {
+    setRegisterRole(role);
+    setRegisterStep(role ? 2 : 1);
+    setAuthScreen('register');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const scrollToSection = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  if (authScreen === 'landing' || authScreen === null) {
+    return (
+      <div className="min-h-screen bg-white text-slate-900 flex flex-col selection:bg-indigo-100 selection:text-indigo-900">
+        {/* Top Navigation Bar */}
+        <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-100">
+          <div className="max-w-7xl mx-auto px-6 lg:px-10 h-20 flex items-center justify-between gap-8">
+            {/* Brand Wordmark */}
+            <button
+              type="button"
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              className="flex items-center gap-3 text-left whitespace-nowrap shrink-0 cursor-pointer"
+            >
+              <div className="w-10 h-10 rounded-xl bg-[#5B4FE9] text-white flex items-center justify-center shadow-md shadow-indigo-500/20">
+                <Sparkles className="w-5 h-5" />
+              </div>
+              <span className="text-xl font-extrabold tracking-tight text-slate-900">
+                Industry-Academia<span className="text-[#5B4FE9]">.</span>
+              </span>
+            </button>
+
+            {/* Center Navigation Links */}
+            <nav className="hidden md:flex items-center gap-9 text-sm font-medium text-slate-600">
+              <button
+                type="button"
+                onClick={() => scrollToSection('how-it-works')}
+                className="hover:text-slate-900 transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+              >
+                How it works
+              </button>
+              <button
+                type="button"
+                onClick={() => scrollToSection('for-students')}
+                className="hover:text-slate-900 transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+              >
+                For students
+              </button>
+              <button
+                type="button"
+                onClick={() => scrollToSection('for-companies')}
+                className="hover:text-slate-900 transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+              >
+                For companies
+              </button>
+              <button
+                type="button"
+                onClick={() => scrollToSection('opportunities')}
+                className="hover:text-slate-900 transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+              >
+                Opportunities
+              </button>
+            </nav>
+
+            {/* Right Actions */}
+            <div className="flex items-center gap-5 shrink-0">
+              <button
+                type="button"
+                onClick={() => {
+                  setAuthScreen('login');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                className="text-sm font-semibold text-[#5B4FE9] hover:text-[#4639d8] transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+              >
+                Sign in
+              </button>
+              <button
+                type="button"
+                onClick={() => handleStartRegistrationWithRole(null)}
+                className="px-5 py-2.5 bg-[#5B4FE9] hover:bg-[#4A3EE0] text-white text-sm font-semibold rounded-xl shadow-md shadow-indigo-500/20 transition-all flex items-center gap-2 whitespace-nowrap shrink-0 cursor-pointer"
+              >
+                <span>Get started</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        </header>
+
+        {/* Hero Section */}
+        <section className="relative overflow-hidden pt-12 pb-24 lg:pt-20 lg:pb-32">
+          <div className="max-w-7xl mx-auto px-6 lg:px-10">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+              {/* Left Column: Value Proposition & CTAs */}
+              <div className="lg:col-span-6 space-y-8">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-indigo-50/90 border border-indigo-100 text-[#5B4FE9] text-xs font-semibold">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  <span>AI-powered career matching</span>
+                </div>
+
+                <h1 className="text-4xl sm:text-5xl lg:text-[60px] font-extrabold text-slate-900 tracking-tight leading-[1.06]">
+                  Find the right{' '}
+                  <span className="block">internship &amp; job</span>
+                  <span className="text-[#5B4FE9] block">with AI</span>
+                </h1>
+
+                <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-xl font-normal">
+                  Turn your skills, education, and ambitions into opportunities that fit. Industry-Academia explains every match so you can apply with confidence.
+                </p>
+
+                <div className="flex flex-wrap items-center gap-4 pt-1">
+                  <button
+                    type="button"
+                    onClick={() => handleStartRegistrationWithRole(null)}
+                    className="px-7 py-4 bg-[#5B4FE9] hover:bg-[#4A3EE0] text-white text-sm font-semibold rounded-xl shadow-lg shadow-indigo-500/25 transition-all flex items-center gap-2.5 whitespace-nowrap cursor-pointer"
+                  >
+                    <span>Get started</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => scrollToSection('opportunities')}
+                    className="px-7 py-4 bg-white hover:bg-slate-50 text-slate-900 text-sm font-semibold rounded-xl border border-slate-200 shadow-2xs transition-colors whitespace-nowrap cursor-pointer"
+                  >
+                    Explore opportunities
+                  </button>
+                </div>
+
+                {/* Student Social Proof */}
+                <div className="pt-4 flex items-center gap-4">
+                  <div className="flex items-center -space-x-2.5">
+                    <div className="w-10 h-10 rounded-full bg-indigo-50 border-2 border-white text-[#5B4FE9] font-bold text-xs flex items-center justify-center shadow-2xs">
+                      AM
+                    </div>
+                    <div className="w-10 h-10 rounded-full bg-indigo-100/80 border-2 border-white text-[#5B4FE9] font-bold text-xs flex items-center justify-center shadow-2xs">
+                      JL
+                    </div>
+                    <div className="w-10 h-10 rounded-full bg-indigo-50 border-2 border-white text-[#5B4FE9] font-bold text-xs flex items-center justify-center shadow-2xs">
+                      SK
+                    </div>
+                    <div className="w-10 h-10 rounded-full bg-slate-100 border-2 border-white text-[#5B4FE9] font-bold text-xs flex items-center justify-center shadow-2xs">
+                      +
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-sm font-bold text-slate-900 tabular-nums">
+                      12,000+ students
+                    </div>
+                    <div className="text-xs text-slate-500">
+                      discovering better-fit careers
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Column: Interactive Recommendation Showcase Card */}
+              <div className="lg:col-span-6 relative flex items-center justify-center">
+                {/* Subtle Concentric Background Rings */}
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                  <div className="w-[420px] h-[420px] sm:w-[500px] sm:h-[500px] rounded-full border border-indigo-100/70" />
+                  <div className="absolute w-[340px] h-[340px] sm:w-[400px] sm:h-[400px] rounded-full border border-indigo-100/90" />
+                </div>
+
+                {/* Floating Callout 1: 8 skills detected */}
+                <div className="hidden sm:flex absolute -left-2 lg:-left-6 top-16 z-20 bg-white rounded-2xl p-3.5 pr-5 shadow-[0_16px_40px_-12px_rgba(15,23,42,0.14)] border border-slate-100 items-center gap-3.5">
+                  <div className="w-10 h-10 rounded-xl bg-indigo-50 text-[#5B4FE9] flex items-center justify-center shrink-0">
+                    <Sparkles className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <div className="text-xs font-bold text-slate-900 tabular-nums">
+                      8 skills detected
+                    </div>
+                    <div className="text-[11px] text-slate-500">
+                      from your resume
+                    </div>
+                  </div>
+                </div>
+
+                {/* Main Recommendation Card */}
+                <div className="relative z-10 w-full max-w-[420px] bg-white rounded-3xl p-7 sm:p-8 shadow-[0_28px_70px_-15px_rgba(15,23,42,0.12)] border border-slate-100/90 -rotate-1 hover:rotate-0 transition-transform duration-300">
+                  {/* Top Row: Avatar + Badge + 94% Circular Ring */}
+                  <div className="flex items-start justify-between gap-4 mb-5">
+                    <div className="space-y-3">
+                      <div className="w-12 h-12 rounded-2xl bg-indigo-50 text-[#5B4FE9] font-extrabold text-lg flex items-center justify-center">
+                        L
+                      </div>
+                      <div className="inline-block px-3 py-1 rounded-md bg-indigo-50/90 text-[#5B4FE9] text-[11px] font-semibold">
+                        Recommended for you
+                      </div>
+                    </div>
+
+                    {/* 94% Match Circular Progress */}
+                    <div className="relative w-18 h-18 flex items-center justify-center shrink-0">
+                      <svg className="w-18 h-18 -rotate-90" viewBox="0 0 72 72">
+                        <circle
+                          cx="36"
+                          cy="36"
+                          r="30"
+                          fill="none"
+                          stroke="#EEF2FF"
+                          strokeWidth="5"
+                        />
+                        <circle
+                          cx="36"
+                          cy="36"
+                          r="30"
+                          fill="none"
+                          stroke="#5B4FE9"
+                          strokeWidth="5"
+                          strokeDasharray="188.5"
+                          strokeDashoffset="11.3"
+                          strokeLinecap="round"
+                        />
+                      </svg>
+                      <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+                        <span className="text-sm font-extrabold text-[#5B4FE9] leading-none tabular-nums">
+                          94%
+                        </span>
+                        <span className="text-[10px] text-slate-400 font-medium mt-0.5">
+                          match
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Role & Company */}
+                  <div>
+                    <h3 className="text-xl font-extrabold text-slate-900 tracking-tight">
+                      Product Design Intern
+                    </h3>
+                    <p className="text-sm text-slate-500 mt-1">
+                      Luma Labs · San Francisco
+                    </p>
+                  </div>
+
+                  {/* Skill Tags */}
+                  <div className="flex flex-wrap gap-2 mt-4">
+                    {['Figma', 'User research', 'Prototyping'].map((tag) => (
+                      <span
+                        key={tag}
+                        className="px-3 py-1 bg-slate-50 border border-slate-200/80 text-slate-700 text-xs font-medium rounded-lg"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="my-5 border-t border-slate-100" />
+
+                  {/* Match Explanation Checklist */}
+                  <div className="space-y-3 text-xs sm:text-sm text-slate-600">
+                    <div className="flex items-center gap-3">
+                      <div className="w-5 h-5 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+                        <Check className="w-3 h-3 stroke-[2.5]" />
+                      </div>
+                      <span>Strong skills alignment</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <div className="w-5 h-5 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+                        <Check className="w-3 h-3 stroke-[2.5]" />
+                      </div>
+                      <span>Matches your career goals</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <div className="w-5 h-5 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+                        <Check className="w-3 h-3 stroke-[2.5]" />
+                      </div>
+                      <span>Preferred location &amp; format</span>
+                    </div>
+                  </div>
+
+                  {/* Card Action Button */}
+                  <button
+                    type="button"
+                    onClick={() => handleStartRegistrationWithRole('student')}
+                    className="mt-6 w-full py-3.5 bg-[#5B4FE9] hover:bg-[#4A3EE0] text-white text-sm font-semibold rounded-2xl shadow-md shadow-indigo-500/20 transition-all flex items-center justify-center gap-2 cursor-pointer"
+                  >
+                    <span>View recommendation</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+                </div>
+
+                {/* Floating Callout 2: 24 new matches this week */}
+                <div className="hidden sm:flex absolute -right-2 lg:-right-6 bottom-14 z-20 bg-white rounded-2xl p-3.5 pr-5 shadow-[0_16px_40px_-12px_rgba(15,23,42,0.14)] border border-slate-100 items-center gap-3">
+                  <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+                    <CheckCircle2 className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <div className="text-xs font-bold text-slate-900 tabular-nums">
+                      24 new matches
+                    </div>
+                    <div className="text-[11px] text-slate-500">
+                      this week
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* How It Works Section */}
+        <section id="how-it-works" className="py-20 bg-slate-50/70 border-y border-slate-200/70">
+          <div className="max-w-7xl mx-auto px-6 lg:px-10 space-y-12">
+            <div className="max-w-2xl space-y-3">
+              <div className="text-xs font-bold text-[#5B4FE9] tracking-wide">
+                How It Works
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+                From academic coursework to verified industry placement
+              </h2>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                Our AI engine connects university talent, alumni mentors, career counselors, and hiring partners in one transparent workflow.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="p-6 bg-white border border-slate-200/90 rounded-2xl space-y-3">
+                <div className="text-xs font-bold text-[#5B4FE9] font-mono tabular-nums">
+                  01. Profile &amp; Resume Parsing
+                </div>
+                <h3 className="text-base font-bold text-slate-900">
+                  Extract verified competencies automatically
+                </h3>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  Upload your academic resume in PDF format. Our AI parses your coursework, technical stack, and project experience with 95%+ confidence.
+                </p>
+              </div>
+
+              <div className="p-6 bg-white border border-slate-200/90 rounded-2xl space-y-3">
+                <div className="text-xs font-bold text-[#5B4FE9] font-mono tabular-nums">
+                  02. Explainable AI Matching &amp; Gap Remediation
+                </div>
+                <h3 className="text-base font-bold text-slate-900">
+                  See exactly why you match and what to learn next
+                </h3>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  Every internship and graduate role includes a transparent compatibility score, skill gap breakdown, and accredited CDC courses to close missing gaps.
+                </p>
+              </div>
+
+              <div className="p-6 bg-white border border-slate-200/90 rounded-2xl space-y-3">
+                <div className="text-xs font-bold text-[#5B4FE9] font-mono tabular-nums">
+                  03. Direct Application &amp; Alumni Mentorship
+                </div>
+                <h3 className="text-base font-bold text-slate-900">
+                  Apply with confidence &amp; track every stage
+                </h3>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  Submit applications directly to partner companies, request 1-on-1 portfolio reviews from alumni, and track interview invitations live.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* For Students & For Companies Stakeholder Section */}
+        <section id="for-students" className="py-20 bg-white">
+          <div className="max-w-7xl mx-auto px-6 lg:px-10 space-y-12">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+              <div className="max-w-xl space-y-2">
+                <div className="text-xs font-bold text-[#5B4FE9] tracking-wide">
+                  5-Role Institutional Ecosystem
+                </div>
+                <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+                  Tailored workspaces for every stakeholder
+                </h2>
+              </div>
+              <button
+                type="button"
+                onClick={() => handleStartRegistrationWithRole(null)}
+                className="text-xs font-semibold text-[#5B4FE9] hover:underline flex items-center gap-1.5 cursor-pointer"
+              >
+                <span>Choose your role &amp; register</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
+
+            <div id="for-companies" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+              {rolesList.map((r) => (
+                <div
+                  key={r.id}
+                  className="p-6 bg-white border border-slate-200 rounded-2xl hover:border-indigo-300 transition-all flex flex-col justify-between space-y-5"
+                >
+                  <div className="space-y-3">
+                    <div className="w-11 h-11 rounded-xl bg-slate-50 border border-slate-200/80 flex items-center justify-center">
+                      {r.icon}
+                    </div>
+                    <div>
+                      <h3 className="text-base font-bold text-slate-900">{r.title}</h3>
+                      <div className="text-xs text-slate-500 mt-0.5">{r.subtitle}</div>
+                    </div>
+                    <p className="text-xs text-slate-600 leading-relaxed">{r.desc}</p>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => handleStartRegistrationWithRole(r.id)}
+                    className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-[#5B4FE9] hover:text-[#4A3EE0] cursor-pointer"
+                  >
+                    <span>Get started as {r.title}</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Featured Opportunities Preview */}
+        <section id="opportunities" className="py-20 bg-slate-50/70 border-t border-slate-200/70">
+          <div className="max-w-7xl mx-auto px-6 lg:px-10 space-y-10">
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+              <div>
+                <div className="text-xs font-bold text-[#5B4FE9] tracking-wide">
+                  Live Campus Requisitions
+                </div>
+                <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mt-1">
+                  Explore AI-matched opportunities
+                </h2>
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  setAuthScreen('login');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                className="text-xs font-semibold text-slate-700 hover:text-slate-900 flex items-center gap-1.5 cursor-pointer"
+              >
+                <span>Sign in to view all {jobs.length} listings</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+              {jobs.slice(0, 3).map((job) => (
+                <div
+                  key={job.id}
+                  className="p-6 bg-white border border-slate-200 rounded-2xl flex flex-col justify-between space-y-5"
+                >
+                  <div className="space-y-3">
+                    <div className="flex items-start justify-between gap-3">
+                      <div>
+                        <h3 className="text-sm font-bold text-slate-900">{job.title}</h3>
+                        <p className="text-xs text-slate-500 mt-0.5">
+                          {job.company} · {job.location}
+                        </p>
+                      </div>
+                      <span className="text-xs font-extrabold text-[#5B4FE9] tabular-nums shrink-0">
+                        {job.matchScore || 92}% match
+                      </span>
+                    </div>
+
+                    <p className="text-xs text-slate-600 line-clamp-2 leading-relaxed">
+                      {job.description}
+                    </p>
+
+                    <div className="flex flex-wrap gap-1.5 pt-1">
+                      {job.requiredSkills.slice(0, 4).map((skill) => (
+                        <span
+                          key={skill}
+                          className="px-2.5 py-0.5 bg-slate-50 border border-slate-200 text-slate-700 text-[11px] font-medium rounded-md"
+                        >
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
+                    <span className="text-xs font-semibold text-slate-700">{job.salary}</span>
+                    <button
+                      type="button"
+                      onClick={() => handleStartRegistrationWithRole('student')}
+                      className="text-xs font-semibold text-[#5B4FE9] hover:text-[#4A3EE0] flex items-center gap-1 cursor-pointer"
+                    >
+                      <span>Apply with AI</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Quiet Footer */}
+        <footer className="py-10 bg-white border-t border-slate-200/80">
+          <div className="max-w-7xl mx-auto px-6 lg:px-10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+            <div className="flex items-center gap-2.5">
+              <div className="w-7 h-7 rounded-lg bg-[#5B4FE9] text-white flex items-center justify-center font-bold text-xs">
+                <Sparkles className="w-3.5 h-3.5" />
+              </div>
+              <span className="font-bold text-slate-900">Industry-Academia.</span>
+              <span>· AI-Based Internship &amp; Job Recommendation System</span>
+            </div>
+            <div className="flex items-center gap-6">
+              <button
+                type="button"
+                onClick={() => {
+                  setAuthScreen('login');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                className="hover:text-slate-900 transition-colors cursor-pointer"
+              >
+                Sign in
+              </button>
+              <button
+                type="button"
+                onClick={() => handleStartRegistrationWithRole(null)}
+                className="hover:text-slate-900 transition-colors cursor-pointer"
+              >
+                Get started
+              </button>
+            </div>
+          </div>
+        </footer>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col justify-between py-8 px-4 sm:px-6 lg:px-8">
       {/* Top Header */}
       <div className="max-w-4xl mx-auto w-full flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <div className="w-9 h-9 rounded-lg bg-slate-900 text-white flex items-center justify-center font-bold text-sm tracking-wider">
-            IA
+        <button
+          type="button"
+          onClick={() => setAuthScreen('landing')}
+          className="flex items-center gap-2.5 text-left group cursor-pointer"
+        >
+          <div className="w-9 h-9 rounded-xl bg-[#5B4FE9] text-white flex items-center justify-center font-bold text-sm shadow-xs">
+            <Sparkles className="w-4 h-4" />
           </div>
           <div>
             <div className="text-base font-bold text-slate-900 flex items-center gap-2">
-              <span>Industry-Academia</span>
-              <span className="text-[11px] font-semibold px-2 py-0.5 rounded-md bg-indigo-50 text-indigo-700 border border-indigo-100 flex items-center gap-1">
-                AI Recommendation System
-              </span>
+              <span>Industry-Academia<span className="text-[#5B4FE9]">.</span></span>
             </div>
           </div>
-        </div>
+        </button>
 
-        <div className="flex items-center gap-3 text-xs">
+        <div className="flex items-center gap-4 text-xs">
+          <button
+            type="button"
+            onClick={() => setAuthScreen('landing')}
+            className="font-medium text-slate-500 hover:text-slate-900 flex items-center gap-1 cursor-pointer"
+          >
+            <ArrowLeft className="w-3.5 h-3.5" />
+            <span>Back to Home</span>
+          </button>
           {authScreen === 'login' ? (
             <button
               onClick={() => { setAuthScreen('register'); setRegisterStep(1); setRegisterRole(null); }}
-              className="font-semibold text-indigo-600 hover:text-indigo-800"
+              className="font-semibold text-[#5B4FE9] hover:text-[#4A3EE0] cursor-pointer"
             >
               New user? Register with Role
             </button>
           ) : (
             <button
               onClick={() => setAuthScreen('login')}
-              className="font-semibold text-slate-600 hover:text-slate-900"
+              className="font-semibold text-slate-700 hover:text-slate-900 cursor-pointer"
             >
               Already registered? Sign In
             </button>
