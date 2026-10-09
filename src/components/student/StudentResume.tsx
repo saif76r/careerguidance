@@ -295,35 +295,35 @@ Projects: Developed scalable Cloud Microservices E-Commerce platform with React 
         <div className="lg:col-span-2 space-y-5">
           {/* AI Profile Summary & Feedback Panel */}
           {aiInsights && (
-            <div className="p-5 bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white rounded-xl space-y-3.5 shadow-sm border border-slate-800">
+            <div className="p-5 bg-white border border-slate-200 rounded-xl space-y-3.5">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <Sparkles className="w-4 h-4 text-amber-400" />
-                  <span className="text-xs font-bold uppercase tracking-wider text-amber-300">
+                  <Sparkles className="w-4 h-4 text-[#5B4FE9]" />
+                  <span className="text-xs font-bold text-slate-900">
                     AI Candidate Profile Assessment
                   </span>
                 </div>
-                <span className="text-[10px] font-mono text-slate-300 bg-white/10 px-2 py-0.5 rounded">
+                <span className="text-[11px] font-medium text-slate-500">
                   {aiInsights.poweredBy || 'AI Career Engine'}
                 </span>
               </div>
 
               {aiInsights.summary && (
-                <p className="text-xs text-slate-200 leading-relaxed bg-white/5 p-3 rounded-lg border border-white/10">
+                <p className="text-xs text-slate-600 leading-relaxed bg-slate-50 p-3.5 rounded-lg border border-slate-200">
                   {aiInsights.summary}
                 </p>
               )}
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
                 {aiInsights.strengths && aiInsights.strengths.length > 0 && (
-                  <div className="p-3 bg-white/5 rounded-lg border border-white/10 space-y-1.5">
-                    <div className="font-bold text-emerald-400 text-[11px] uppercase tracking-wider">
+                  <div className="p-3.5 bg-slate-50 rounded-lg border border-slate-200 space-y-1.5">
+                    <div className="font-bold text-slate-900 text-[11px]">
                       Key Technical Strengths
                     </div>
-                    <ul className="space-y-1 text-slate-300 text-[11px]">
+                    <ul className="space-y-1 text-slate-600 text-[11px]">
                       {aiInsights.strengths.map((s, i) => (
                         <li key={i} className="flex items-start gap-1.5">
-                          <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
+                          <Check className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
                           <span>{s}</span>
                         </li>
                       ))}
@@ -332,14 +332,14 @@ Projects: Developed scalable Cloud Microservices E-Commerce platform with React 
                 )}
 
                 {aiInsights.suggestedImprovements && aiInsights.suggestedImprovements.length > 0 && (
-                  <div className="p-3 bg-white/5 rounded-lg border border-white/10 space-y-1.5">
-                    <div className="font-bold text-amber-400 text-[11px] uppercase tracking-wider">
+                  <div className="p-3.5 bg-slate-50 rounded-lg border border-slate-200 space-y-1.5">
+                    <div className="font-bold text-slate-900 text-[11px]">
                       ATS Optimization Advice
                     </div>
-                    <ul className="space-y-1 text-slate-300 text-[11px]">
+                    <ul className="space-y-1 text-slate-600 text-[11px]">
                       {aiInsights.suggestedImprovements.map((imp, i) => (
                         <li key={i} className="flex items-start gap-1.5">
-                          <span className="text-amber-400 font-bold">•</span>
+                          <span className="text-[#5B4FE9] font-bold">•</span>
                           <span>{imp}</span>
                         </li>
                       ))}

@@ -129,25 +129,21 @@ export const CounselorCourseOfferings: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header Banner */}
-      <div className="p-6 bg-linear-to-r from-slate-900 via-amber-950 to-slate-900 text-white rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-sm">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-slate-200">
         <div>
-          <div className="flex items-center gap-2 text-amber-300 text-xs font-semibold mb-1">
-            <BookOpen className="w-3.5 h-3.5" />
-            <span>Career Development Center (CDC) · Course Offerings Management</span>
-          </div>
-          <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight">
-            CDC Course Offerings & Training Hub
+          <h1 className="text-xl font-bold text-slate-900 tracking-tight">
+            CDC Course Offerings &amp; Training Hub
           </h1>
-          <p className="text-xs text-slate-300 mt-1 max-w-2xl leading-relaxed">
-            Curate, publish, and manage university in-house skill remediation courses, intensive bootcamps, and technical certification labs offered directly by the Career Development Center.
+          <p className="text-sm text-slate-500 mt-1">
+            Curate, publish, and manage university skill remediation courses and technical certification labs.
           </p>
         </div>
 
         <div className="flex items-center gap-3 shrink-0">
           <button
             onClick={() => setIsCreateModalOpen(true)}
-            className="px-4 py-2.5 bg-amber-600 hover:bg-amber-500 text-white text-xs font-semibold rounded-lg transition-colors flex items-center gap-1.5 shadow-xs cursor-pointer"
+            className="px-4 py-2 bg-[#5B4FE9] hover:bg-[#4F43D6] text-white text-xs font-semibold rounded-lg transition-colors flex items-center gap-1.5 shadow-xs cursor-pointer"
           >
             <Plus className="w-4 h-4" />
             Offer New CDC Course

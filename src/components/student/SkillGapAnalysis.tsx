@@ -709,18 +709,14 @@ export const SkillGapAnalysis: React.FC = () => {
           </div>
 
           {/* AI Custom Remediation Roadmap Card */}
-          <div className="p-6 bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white rounded-xl space-y-4 shadow-sm border border-slate-800">
+          <div className="p-6 bg-white border border-slate-200 rounded-xl space-y-4">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
-                <div className="flex items-center gap-2 text-amber-300 text-xs font-bold uppercase tracking-wider">
-                  <Sparkles className="w-4 h-4 text-amber-400" />
-                  <span>AI Accelerated Remediation Engine</span>
-                </div>
-                <h3 className="text-base font-bold text-white mt-1">
+                <h3 className="text-sm font-bold text-slate-900">
                   Custom Skill Bridging Plan for {currentRoleDef.title}
                 </h3>
-                <p className="text-xs text-slate-300 mt-0.5">
-                  Synthesize a personalized step-by-step curriculum to eliminate the {gapPercentage}% gap in {missingSkills.join(', ')}.
+                <p className="text-xs text-slate-500 mt-0.5">
+                  Synthesize a personalized step-by-step curriculum to close the {gapPercentage}% gap in {missingSkills.join(', ')}.
                 </p>
               </div>
 
@@ -728,7 +724,7 @@ export const SkillGapAnalysis: React.FC = () => {
                 type="button"
                 onClick={handleGenerateAiRoadmap}
                 disabled={isRoadmapLoading}
-                className="px-4 py-2 bg-amber-500 hover:bg-amber-400 active:bg-amber-600 disabled:opacity-50 text-slate-950 text-xs font-bold rounded-lg transition-colors flex items-center gap-2 cursor-pointer shadow-xs shrink-0"
+                className="px-4 py-2 bg-[#5B4FE9] hover:bg-[#4F43D6] disabled:opacity-50 text-white text-xs font-semibold rounded-lg transition-colors flex items-center gap-2 cursor-pointer shadow-xs shrink-0"
               >
                 <Sparkles className={`w-3.5 h-3.5 ${isRoadmapLoading ? 'animate-spin' : ''}`} />
                 <span>{isRoadmapLoading ? 'Generating Plan...' : 'Generate AI Roadmap'}</span>
@@ -736,46 +732,46 @@ export const SkillGapAnalysis: React.FC = () => {
             </div>
 
             {aiRoadmap && (
-              <div className="space-y-4 pt-2 border-t border-white/10">
-                <div className="p-3.5 bg-white/5 rounded-lg border border-white/10 text-xs space-y-1">
-                  <div className="font-bold text-white text-sm">{aiRoadmap.roadmapTitle}</div>
-                  <p className="text-slate-300 leading-relaxed">{aiRoadmap.overview}</p>
-                  <div className="text-[11px] text-emerald-400 pt-1 font-semibold">
-                    💡 Verdict: {aiRoadmap.advisoryVerdict}
+              <div className="space-y-4 pt-3 border-t border-slate-100">
+                <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 text-xs space-y-1">
+                  <div className="font-bold text-slate-900 text-sm">{aiRoadmap.roadmapTitle}</div>
+                  <p className="text-slate-600 leading-relaxed">{aiRoadmap.overview}</p>
+                  <div className="text-[11px] text-emerald-700 pt-1 font-semibold">
+                    Verdict: {aiRoadmap.advisoryVerdict}
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                   {aiRoadmap.weeks.map((w) => (
-                    <div key={w.weekNumber} className="p-4 bg-white/5 rounded-xl border border-white/10 space-y-2.5 text-xs flex flex-col justify-between">
+                    <div key={w.weekNumber} className="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-2.5 text-xs flex flex-col justify-between">
                       <div className="space-y-2">
                         <div className="flex items-center justify-between">
-                          <span className="text-[10px] font-mono font-bold bg-amber-400/20 text-amber-300 border border-amber-400/30 px-2 py-0.5 rounded">
+                          <span className="text-[10px] font-mono font-bold bg-indigo-50 text-[#5B4FE9] border border-indigo-100 px-2 py-0.5 rounded">
                             WEEK {w.weekNumber}
                           </span>
                           <span className="text-[10px] text-slate-400 font-medium">Milestone Track</span>
                         </div>
-                        <div className="font-bold text-white text-xs leading-snug">
+                        <div className="font-bold text-slate-900 text-xs leading-snug">
                           {w.title}
                         </div>
                         <div className="flex flex-wrap gap-1">
                           {w.focusSkills.map((s, idx) => (
-                            <span key={idx} className="text-[10px] bg-indigo-500/30 text-indigo-200 px-1.5 py-0.5 rounded">
+                            <span key={idx} className="text-[10px] bg-white border border-slate-200 text-slate-700 px-1.5 py-0.5 rounded">
                               {s}
                             </span>
                           ))}
                         </div>
-                        <ul className="space-y-1 text-slate-300 text-[11px] pt-1">
+                        <ul className="space-y-1 text-slate-600 text-[11px] pt-1">
                           {w.actionItems.map((act, i) => (
                             <li key={i} className="flex items-start gap-1.5 leading-snug">
-                              <CheckCircle2 className="w-3 h-3 text-emerald-400 shrink-0 mt-0.5" />
+                              <CheckCircle2 className="w-3 h-3 text-emerald-600 shrink-0 mt-0.5" />
                               <span>{act}</span>
                             </li>
                           ))}
                         </ul>
                       </div>
 
-                      <div className="pt-2 border-t border-white/10 text-[11px] text-amber-200">
+                      <div className="pt-2 border-t border-slate-200/80 text-[11px] text-slate-700">
                         <strong>Project:</strong> {w.milestoneProject}
                       </div>
                     </div>
@@ -1017,62 +1013,61 @@ export const SkillGapAnalysis: React.FC = () => {
           </div>
 
           {/* STEP 3: ACTIONABLE HELP: CDC OR ALUMNI SUPPORT */}
-          <div className="p-6 bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-950 text-white rounded-2xl space-y-6 shadow-sm">
+          <div className="p-6 bg-white border border-slate-200 rounded-xl space-y-5">
             <div className="space-y-1">
-              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-indigo-500/20 border border-indigo-400/30 text-indigo-300 text-[11px] font-semibold">
-                <Compass className="w-3.5 h-3.5" />
-                <span>Step 3: Bridge Your Skill Gap with Expert Support</span>
+              <div className="text-[11px] font-bold text-[#5B4FE9] uppercase tracking-wider">
+                Step 3: Bridge Your Skill Gap
               </div>
-              <h2 className="text-lg font-bold text-white tracking-tight">
-                Take Help from CDC (Courses & Training) or Alumni (Mentorship)
+              <h2 className="text-base font-bold text-slate-900 tracking-tight">
+                CDC Remediation Courses &amp; Alumni Mentorship
               </h2>
-              <p className="text-xs text-slate-300 max-w-2xl leading-relaxed">
-                You can bridge your technical gaps through two paths: enroll in the specialized training courses and certification tracks provided directly by the Career Development Center (CDC), or seek real-world 1:1 mentorship from an Alumni practitioner.
+              <p className="text-xs text-slate-500 max-w-2xl leading-relaxed">
+                Bridge your technical gaps by enrolling in university Career Development Center (CDC) certification courses or requesting 1:1 mentorship from an Alumni practitioner.
               </p>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
               {/* Option A: Career Development Center (CDC) - Course & Training Provider */}
-              <div className="p-5 bg-white/10 backdrop-blur-xs border border-white/15 rounded-xl space-y-4 flex flex-col justify-between">
+              <div className="p-5 bg-slate-50 border border-slate-200 rounded-xl space-y-4 flex flex-col justify-between">
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-bold tracking-wider uppercase px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-400/30">
-                      Option A: CDC Skill Training & Courses
+                    <span className="text-[11px] font-bold text-slate-700">
+                      Option A · CDC Training &amp; Courses
                     </span>
-                    <Award className="w-4 h-4 text-amber-400" />
+                    <Award className="w-4 h-4 text-[#5B4FE9]" />
                   </div>
 
                   <div>
-                    <h3 className="text-sm font-bold text-white">
-                      Courses Provided by Career Development Center (CDC)
+                    <h3 className="text-sm font-bold text-slate-900">
+                      Career Development Center (CDC) Tracks
                     </h3>
-                    <div className="text-xs text-slate-300 mt-0.5">
-                      Official university remediation tracks supervised by Dr. Ariful Haque (CDC Placement Cell)
+                    <div className="text-xs text-slate-500 mt-0.5">
+                      Supervised by Dr. Ariful Haque (CDC Placement Cell)
                     </div>
                   </div>
 
-                  <div className="space-y-2 text-xs text-slate-300">
+                  <div className="space-y-2 text-xs text-slate-600">
                     <div className="flex items-start gap-2">
-                      <Check className="w-3.5 h-3.5 text-amber-400 mt-0.5 shrink-0" />
-                      <span>CDC provides accredited training courses specifically for missing skills: {missingSkills.slice(0, 3).join(', ')}</span>
+                      <Check className="w-3.5 h-3.5 text-emerald-600 mt-0.5 shrink-0" />
+                      <span>Accredited training modules for missing skills: {missingSkills.slice(0, 3).join(', ')}</span>
                     </div>
                     <div className="flex items-start gap-2">
-                      <Check className="w-3.5 h-3.5 text-amber-400 mt-0.5 shrink-0" />
-                      <span>Free university lab access, dedicated instructor support, and project evaluations</span>
+                      <Check className="w-3.5 h-3.5 text-emerald-600 mt-0.5 shrink-0" />
+                      <span>University lab access, instructor support, and project evaluations</span>
                     </div>
                     <div className="flex items-start gap-2">
-                      <Check className="w-3.5 h-3.5 text-amber-400 mt-0.5 shrink-0" />
-                      <span>Official CDC Skill Certificate issued directly upon completion for campus placement</span>
+                      <Check className="w-3.5 h-3.5 text-emerald-600 mt-0.5 shrink-0" />
+                      <span>Official CDC Skill Certificate issued upon completion</span>
                     </div>
                   </div>
 
                   {enrolledCdcTrack && (
-                    <div className="p-3 rounded-lg bg-emerald-950/60 border border-emerald-500/40 text-emerald-200 text-xs">
-                      <div className="font-bold flex items-center gap-1.5 text-emerald-300">
-                        <CheckCircle2 className="w-3.5 h-3.5" />
+                    <div className="p-3 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-900 text-xs">
+                      <div className="font-bold flex items-center gap-1.5 text-emerald-800">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
                         CDC Remediation Track Active
                       </div>
-                      <div className="text-[11px] text-emerald-300/80 mt-1">
+                      <div className="text-[11px] text-emerald-700 mt-1">
                         Track: {enrolledCdcTrack.trackName} · Format: {enrolledCdcTrack.mode}
                       </div>
                     </div>
@@ -1083,7 +1078,7 @@ export const SkillGapAnalysis: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => setIsCdcModalOpen(true)}
-                    className="w-full py-2.5 px-4 bg-amber-600 hover:bg-amber-500 active:bg-amber-700 text-white text-xs font-bold rounded-lg transition-colors flex items-center justify-center gap-2 shadow-xs"
+                    className="w-full py-2.5 px-4 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-lg transition-colors flex items-center justify-center gap-2 cursor-pointer"
                   >
                     <BookOpen className="w-3.5 h-3.5" />
                     <span>
@@ -1094,56 +1089,56 @@ export const SkillGapAnalysis: React.FC = () => {
               </div>
 
               {/* Option B: Alumni Industry Mentor */}
-              <div className="p-5 bg-white/10 backdrop-blur-xs border border-white/15 rounded-xl space-y-4 flex flex-col justify-between">
+              <div className="p-5 bg-slate-50 border border-slate-200 rounded-xl space-y-4 flex flex-col justify-between">
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-bold tracking-wider uppercase px-2 py-0.5 rounded bg-sky-500/20 text-sky-300 border border-sky-400/30">
-                      Option B: Alumni Mentorship Network
+                    <span className="text-[11px] font-bold text-slate-700">
+                      Option B · Alumni Mentorship Network
                     </span>
-                    <Users className="w-4 h-4 text-sky-400" />
+                    <Users className="w-4 h-4 text-[#5B4FE9]" />
                   </div>
 
                   <div className="flex items-start gap-3">
                     <img
                       src={matchedAlum.avatar}
                       alt={matchedAlum.name}
-                      className="w-11 h-11 rounded-lg object-cover ring-2 ring-sky-400/30 shrink-0"
+                      className="w-11 h-11 rounded-lg object-cover ring-1 ring-slate-200 shrink-0"
                     />
                     <div>
-                      <h3 className="text-sm font-bold text-white">
+                      <h3 className="text-sm font-bold text-slate-900">
                         {matchedAlum.name}
                       </h3>
-                      <div className="text-xs text-sky-300 font-medium">
+                      <div className="text-xs text-[#5B4FE9] font-medium">
                         {matchedAlum.role} · {matchedAlum.company}
                       </div>
-                      <div className="text-[11px] text-slate-400 mt-0.5">
+                      <div className="text-[11px] text-slate-500 mt-0.5">
                         Class of {matchedAlum.gradYear} ({matchedAlum.department}) · {matchedAlum.location}
                       </div>
                     </div>
                   </div>
 
-                  <div className="space-y-2 text-xs text-slate-300">
+                  <div className="space-y-2 text-xs text-slate-600">
                     <div className="flex items-start gap-2">
-                      <Check className="w-3.5 h-3.5 text-sky-400 mt-0.5 shrink-0" />
-                      <span>Direct technical review & roadmap advice from an engineer at {matchedAlum.company}</span>
+                      <Check className="w-3.5 h-3.5 text-emerald-600 mt-0.5 shrink-0" />
+                      <span>Direct technical review &amp; roadmap advice from an engineer at {matchedAlum.company}</span>
                     </div>
                     <div className="flex items-start gap-2">
-                      <Check className="w-3.5 h-3.5 text-sky-400 mt-0.5 shrink-0" />
-                      <span>Practical tips on mastering {missingSkills.slice(0, 2).join(' & ')} for production interviews</span>
+                      <Check className="w-3.5 h-3.5 text-emerald-600 mt-0.5 shrink-0" />
+                      <span>Practical tips on mastering {missingSkills.slice(0, 2).join(' & ')} for interviews</span>
                     </div>
                     <div className="flex items-start gap-2">
-                      <Check className="w-3.5 h-3.5 text-sky-400 mt-0.5 shrink-0" />
+                      <Check className="w-3.5 h-3.5 text-emerald-600 mt-0.5 shrink-0" />
                       <span>Mentorship areas: {matchedAlum.mentorshipAreas.join(', ')}</span>
                     </div>
                   </div>
 
                   {sentAlumniRequest && (
-                    <div className="p-3 rounded-lg bg-sky-950/60 border border-sky-500/40 text-sky-200 text-xs">
-                      <div className="font-bold flex items-center gap-1.5 text-sky-300">
+                    <div className="p-3 rounded-lg bg-indigo-50 border border-indigo-200 text-indigo-900 text-xs">
+                      <div className="font-bold flex items-center gap-1.5 text-[#5B4FE9]">
                         <CheckCircle2 className="w-3.5 h-3.5" />
                         Mentorship Request Sent
                       </div>
-                      <div className="text-[11px] text-sky-300/80 mt-1">
+                      <div className="text-[11px] text-indigo-800 mt-1">
                         Dispatched to {sentAlumniRequest}. Track responses under Alumni Connect.
                       </div>
                     </div>
@@ -1157,7 +1152,7 @@ export const SkillGapAnalysis: React.FC = () => {
                       setSelectedAlumId(matchedAlum.id);
                       setIsAlumniModalOpen(true);
                     }}
-                    className="w-full py-2.5 px-4 bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white text-xs font-bold rounded-lg transition-colors flex items-center justify-center gap-2 shadow-xs"
+                    className="w-full py-2.5 px-4 bg-[#5B4FE9] hover:bg-[#4F43D6] text-white text-xs font-semibold rounded-lg transition-colors flex items-center justify-center gap-2 cursor-pointer"
                   >
                     <MessageSquare className="w-3.5 h-3.5" />
                     <span>

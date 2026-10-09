@@ -1,18 +1,10 @@
 import React from 'react';
 import { 
   Sparkles, 
-  FileText, 
-  Briefcase, 
-  Target, 
-  Users, 
   ArrowRight, 
   CheckCircle2, 
-  Clock, 
-  Building2, 
-  ChevronRight,
-  TrendingUp,
   Bookmark,
-  Bell
+  ChevronRight
 } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 
@@ -27,330 +19,303 @@ export const StudentDashboard: React.FC = () => {
     setActiveTab, 
     toggleSaveJob, 
     savedJobIds,
-    applyToJob,
-    notifications
+    applyToJob
   } = useApp();
 
   const recommendedJobs = jobs.filter(j => (j.matchScore || 0) >= 85);
   const activeApplications = applications.slice(0, 3);
 
   return (
-    <div className="space-y-6">
-      {/* Welcome Banner */}
-      <div className="p-6 bg-slate-900 rounded-xl text-white shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <div className="space-y-8">
+      {/* Clean Page Header */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-5 border-b border-slate-200/80">
         <div>
-          <div className="text-xs font-semibold text-slate-300 mb-1">
-            Academic Term: Fall 2026 - Student Placement Portal
+          <div className="text-xs font-medium text-slate-500 mb-1">
+            {currentUser.university} · {currentUser.degree}
           </div>
-          <h1 className="text-xl sm:text-2xl font-bold tracking-tight">
-            Student Dashboard: {currentUser.name}
+          <h1 className="text-2xl font-bold text-slate-900 tracking-tight">
+            Welcome back, {currentUser.name.split(' ')[0]}
           </h1>
-          <p className="text-xs text-slate-300 mt-1 max-w-xl leading-relaxed">
-            Department: {currentUser.major} ({currentUser.degree}). Verified coursework in {currentUser.skills.slice(0, 4).join(', ')}. Review matching requisitions and manage applications below.
+          <p className="text-sm text-slate-500 mt-1">
+            Here is your placement readiness summary and top matching opportunities for Fall 2026.
           </p>
         </div>
-        <div className="flex items-center gap-3 shrink-0">
-          <button
-            onClick={() => setActiveTab('recommendations')}
-            className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold rounded-lg transition-colors flex items-center gap-1.5 shadow-xs"
-          >
-            <Sparkles className="w-3.5 h-3.5" />
-            View Recommendations
-          </button>
+
+        <div className="flex items-center gap-2.5 shrink-0">
           <button
             onClick={() => setActiveTab('skill_gap')}
-            className="px-4 py-2 bg-white/10 hover:bg-white/20 text-white text-xs font-semibold rounded-lg transition-colors border border-white/20"
+            className="px-4 py-2 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold rounded-lg border border-slate-200 transition-colors cursor-pointer"
           >
-            Analyze Gaps
+            Skill Gap Analysis
+          </button>
+          <button
+            onClick={() => setActiveTab('recommendations')}
+            className="px-4 py-2 bg-[#5B4FE9] hover:bg-[#4F43D6] text-white text-xs font-semibold rounded-lg transition-colors flex items-center gap-1.5 shadow-2xs cursor-pointer"
+          >
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>View Recommendations</span>
           </button>
         </div>
       </div>
 
-      {/* KPI Cards Row */}
+      {/* Clean KPI Row (Max 3 data points per card) */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {/* Profile Completion */}
-        <div className="p-4 bg-white border border-slate-200 rounded-xl">
-          <div className="flex items-center justify-between text-xs text-slate-500 font-medium">
-            <span>Profile Completion</span>
-            <span className="font-bold text-slate-900">92%</span>
-          </div>
-          <div className="w-full bg-slate-100 rounded-sm h-2 mt-2">
-            <div className="bg-emerald-500 h-2 rounded-sm" style={{ width: '92%' }}></div>
-          </div>
-          <div className="mt-3 text-[11px] text-slate-500 flex items-center justify-between">
-            <span>CGPA: {currentUser.gpa}</span>
-            <button onClick={() => setActiveTab('profile')} className="text-indigo-600 font-semibold hover:underline">
-              Manage Profile
-            </button>
+        <div
+          onClick={() => setActiveTab('profile')}
+          className="p-5 bg-white border border-slate-200/90 rounded-xl hover:border-slate-300 transition-colors cursor-pointer"
+        >
+          <div className="text-xs font-medium text-slate-500">Profile Readiness</div>
+          <div className="text-2xl font-bold text-slate-900 mt-2 tabular-nums">92%</div>
+          <div className="mt-2 text-xs text-slate-500">
+            CGPA {currentUser.gpa || '3.86'} · Verified
           </div>
         </div>
 
-        {/* Active Resume */}
-        <div className="p-4 bg-white border border-slate-200 rounded-xl">
-          <div className="flex items-center justify-between text-xs text-slate-500 font-medium">
-            <span>Active Resume</span>
-            <span className="text-[10px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-100">
-              Verified
-            </span>
+        <div
+          onClick={() => setActiveTab('resume')}
+          className="p-5 bg-white border border-slate-200/90 rounded-xl hover:border-slate-300 transition-colors cursor-pointer"
+        >
+          <div className="text-xs font-medium text-slate-500">Extracted Skills</div>
+          <div className="text-2xl font-bold text-slate-900 mt-2 tabular-nums">
+            {resume.extractedSkills.length}
           </div>
-          <div className="mt-2 text-sm font-bold text-slate-900 truncate">
-            {resume.fileName.replace('_Resume.pdf', '')}
-          </div>
-          <div className="mt-3 text-[11px] text-slate-500 flex items-center justify-between">
-            <span>{resume.fileSize || '1.42 MB'} · Uploaded</span>
-            <button onClick={() => setActiveTab('resume')} className="text-indigo-600 font-semibold hover:underline">
-              Upload Resume
-            </button>
+          <div className="mt-2 text-xs text-emerald-600 font-medium">
+            {resume.confidenceScore}% parse confidence
           </div>
         </div>
 
-        {/* Matched Roles */}
-        <div className="p-4 bg-white border border-slate-200 rounded-xl">
-          <div className="flex items-center justify-between text-xs text-slate-500 font-medium">
-            <span>Matched Roles</span>
-            <span className="text-xs font-bold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded">
-              {recommendedJobs.length} Available
-            </span>
+        <div
+          onClick={() => setActiveTab('recommendations')}
+          className="p-5 bg-white border border-slate-200/90 rounded-xl hover:border-slate-300 transition-colors cursor-pointer"
+        >
+          <div className="text-xs font-medium text-slate-500">High-Fit Matches</div>
+          <div className="text-2xl font-bold text-slate-900 mt-2 tabular-nums">
+            {recommendedJobs.length}
           </div>
-          <div className="mt-2 text-sm font-bold text-slate-900 truncate">
-            NovaTech Solutions
-          </div>
-          <div className="mt-3 text-[11px] text-slate-500 flex items-center justify-between">
-            <span>Cloud Engineering Intern</span>
-            <button onClick={() => setActiveTab('recommendations')} className="text-indigo-600 font-semibold hover:underline">
-              View Recommendations
-            </button>
+          <div className="mt-2 text-xs text-[#5B4FE9] font-medium">
+            Top match: {recommendedJobs[0]?.matchScore || 94}%
           </div>
         </div>
 
-        {/* Active Applications */}
-        <div className="p-4 bg-white border border-slate-200 rounded-xl">
-          <div className="flex items-center justify-between text-xs text-slate-500 font-medium">
-            <span>Applications Tracked</span>
-            <span className="font-bold text-slate-900">{applications.length} Active</span>
+        <div
+          onClick={() => setActiveTab('applications')}
+          className="p-5 bg-white border border-slate-200/90 rounded-xl hover:border-slate-300 transition-colors cursor-pointer"
+        >
+          <div className="text-xs font-medium text-slate-500">Active Applications</div>
+          <div className="text-2xl font-bold text-slate-900 mt-2 tabular-nums">
+            {applications.length}
           </div>
-          <div className="mt-2 text-sm font-bold text-slate-900 flex items-center gap-1.5">
-            <span className="w-2 h-2 rounded-xs bg-emerald-500"></span>
-            <span>1 Shortlisted</span>
-          </div>
-          <div className="mt-3 text-[11px] text-slate-500 flex items-center justify-between">
-            <span>1 Under Review</span>
-            <button onClick={() => setActiveTab('applications')} className="text-indigo-600 font-semibold hover:underline">
-              Track Applications
-            </button>
+          <div className="mt-2 text-xs text-slate-500">
+            1 shortlisted · 1 in review
           </div>
         </div>
       </div>
 
-      {/* Grid: Recommended Jobs & Skill Gap Summary */}
+      {/* Main Content Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Left 2 Cols: Recommended Jobs & Internships */}
-        <div className="lg:col-span-2 space-y-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-indigo-600" />
-              <h2 className="text-sm font-bold text-slate-900">Recommended Jobs & Internships</h2>
-            </div>
-            <button
-              onClick={() => setActiveTab('recommendations')}
-              className="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1"
-            >
-              View Recommendations <ArrowRight className="w-3 h-3" />
-            </button>
-          </div>
-
-          <div className="space-y-3">
-            {recommendedJobs.map((job) => {
-              const isSaved = savedJobIds.includes(job.id);
-              const hasApplied = applications.some(a => a.jobId === job.id);
-              return (
-                <div
-                  key={job.id}
-                  className="p-4 bg-white border border-slate-200 rounded-xl hover:border-slate-300 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4"
-                >
-                  <div className="space-y-1.5">
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs font-semibold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-100">
-                        Recommended
-                      </span>
-                      <span className="text-xs text-slate-400">·</span>
-                      <span className="text-xs text-slate-500">{job.type}</span>
-                      <span className="text-xs text-slate-400">·</span>
-                      <span className="text-xs text-slate-500">{job.location}</span>
-                    </div>
-
-                    <h3 className="text-sm font-bold text-slate-900">{job.title}</h3>
-                    <div className="text-xs text-slate-600 font-medium">{job.company}</div>
-
-                    <div className="flex flex-wrap gap-1.5 pt-1">
-                      {job.requiredSkills.slice(0, 4).map((sk) => (
-                        <span key={sk} className="text-[10px] text-slate-600 bg-slate-100 px-2 py-0.5 rounded">
-                          {sk}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-2 shrink-0">
-                    <button
-                      onClick={() => toggleSaveJob(job.id)}
-                      className={`p-2 rounded-lg border text-xs transition-colors ${
-                        isSaved 
-                          ? 'border-indigo-200 bg-indigo-50 text-indigo-600' 
-                          : 'border-slate-200 text-slate-400 hover:text-slate-600'
-                      }`}
-                      title={isSaved ? 'Remove from Saved' : 'Save Opportunity'}
-                    >
-                      <Bookmark className="w-4 h-4" />
-                    </button>
-                    {hasApplied ? (
-                      <button 
-                        onClick={() => setActiveTab('applications')}
-                        className="px-3.5 py-1.5 bg-slate-100 text-slate-600 text-xs font-semibold rounded-lg flex items-center gap-1"
-                      >
-                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                        Applied
-                      </button>
-                    ) : (
-                      <button
-                        onClick={() => applyToJob(job.id)}
-                        className="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-lg transition-colors"
-                      >
-                        Apply Now
-                      </button>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-
-          {/* Application Status Timeline Preview */}
-          <div className="p-5 bg-white border border-slate-200 rounded-xl space-y-3">
-            <div className="flex items-center justify-between">
-              <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
-                Recent Application Tracking
-              </h3>
+        {/* Left 2 Columns: Top Matches & Applications */}
+        <div className="lg:col-span-2 space-y-6">
+          {/* Top Recommended Opportunities */}
+          <div className="bg-white border border-slate-200/90 rounded-xl overflow-hidden">
+            <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
+              <div>
+                <h2 className="text-sm font-bold text-slate-900">Recommended Opportunities</h2>
+                <p className="text-xs text-slate-500 mt-0.5">
+                  Roles matched to your resume skills and academic background
+                </p>
+              </div>
               <button
-                onClick={() => setActiveTab('applications')}
-                className="text-xs text-indigo-600 font-semibold hover:underline"
+                onClick={() => setActiveTab('recommendations')}
+                className="text-xs font-semibold text-[#5B4FE9] hover:underline flex items-center gap-1 cursor-pointer"
               >
-                View Full Timeline
+                <span>View all</span>
+                <ArrowRight className="w-3.5 h-3.5" />
               </button>
             </div>
 
-            {activeApplications.map((app) => (
-              <div key={app.id} className="p-3 bg-slate-50 rounded-lg border border-slate-200/80 flex items-center justify-between">
-                <div>
-                  <div className="text-xs font-bold text-slate-900">{app.jobTitle}</div>
-                  <div className="text-[11px] text-slate-500">{app.company} · Applied on {app.appliedDate}</div>
+            <div className="divide-y divide-slate-100">
+              {recommendedJobs.map((job) => {
+                const isSaved = savedJobIds.includes(job.id);
+                const hasApplied = applications.some(a => a.jobId === job.id);
+                return (
+                  <div
+                    key={job.id}
+                    className="p-5 hover:bg-slate-50/60 transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+                  >
+                    <div className="space-y-1.5">
+                      <div className="flex items-center gap-2">
+                        <span className="text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200/60 tabular-nums">
+                          {job.matchScore}% match
+                        </span>
+                        <span className="text-xs text-slate-500">{job.type}</span>
+                        <span className="text-slate-300">·</span>
+                        <span className="text-xs text-slate-500">{job.location}</span>
+                      </div>
+
+                      <h3 className="text-sm font-bold text-slate-900">{job.title}</h3>
+                      <div className="text-xs text-slate-500">
+                        {job.company} · <span className="text-slate-700 font-medium tabular-nums">{job.salary}</span>
+                      </div>
+
+                      <div className="flex flex-wrap gap-1.5 pt-1">
+                        {job.requiredSkills.slice(0, 4).map((sk) => (
+                          <span key={sk} className="text-[11px] text-slate-600 bg-slate-100 px-2 py-0.5 rounded-md">
+                            {sk}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-2 shrink-0">
+                      <button
+                        onClick={() => toggleSaveJob(job.id)}
+                        className={`p-2 rounded-lg border transition-colors cursor-pointer ${
+                          isSaved 
+                            ? 'border-[#5B4FE9]/30 bg-[#5B4FE9]/10 text-[#5B4FE9]' 
+                            : 'border-slate-200 text-slate-400 hover:text-slate-600'
+                        }`}
+                        title={isSaved ? 'Remove from Saved' : 'Save Opportunity'}
+                      >
+                        <Bookmark className="w-4 h-4" />
+                      </button>
+                      {hasApplied ? (
+                        <button 
+                          onClick={() => setActiveTab('applications')}
+                          className="px-3.5 py-2 bg-slate-100 text-slate-700 text-xs font-semibold rounded-lg flex items-center gap-1.5 cursor-pointer"
+                        >
+                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                          <span>Applied</span>
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => applyToJob(job.id)}
+                          className="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-lg transition-colors cursor-pointer"
+                        >
+                          Apply Now
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Recent Applications */}
+          <div className="bg-white border border-slate-200/90 rounded-xl overflow-hidden">
+            <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
+              <h2 className="text-sm font-bold text-slate-900">Recent Applications</h2>
+              <button
+                onClick={() => setActiveTab('applications')}
+                className="text-xs font-semibold text-[#5B4FE9] hover:underline cursor-pointer"
+              >
+                Track all
+              </button>
+            </div>
+
+            <div className="divide-y divide-slate-100">
+              {activeApplications.map((app) => (
+                <div key={app.id} className="px-6 py-4 flex items-center justify-between gap-4">
+                  <div>
+                    <div className="text-sm font-semibold text-slate-900">{app.jobTitle}</div>
+                    <div className="text-xs text-slate-500 mt-0.5">
+                      {app.company} · Applied {app.appliedDate}
+                    </div>
+                  </div>
+                  <div className="text-right shrink-0">
+                    <span className={`text-[11px] font-semibold px-2.5 py-1 rounded-md border ${
+                      app.status === 'Shortlisted' || app.status === 'Accepted'
+                        ? 'bg-emerald-50 text-emerald-700 border-emerald-200/70' 
+                        : app.status === 'Interview'
+                        ? 'bg-indigo-50 text-[#5B4FE9] border-indigo-200/70'
+                        : 'bg-amber-50 text-amber-700 border-amber-200/70'
+                    }`}>
+                      {app.status}
+                    </span>
+                  </div>
                 </div>
-                <div className="text-right">
-                  <span className={`text-[11px] font-semibold px-2 py-0.5 rounded ${
-                    app.status === 'Shortlisted' 
-                      ? 'bg-emerald-100 text-emerald-800' 
-                      : app.status === 'Interview'
-                      ? 'bg-purple-100 text-purple-800'
-                      : 'bg-amber-100 text-amber-800'
-                  }`}>
-                    {app.status}
-                  </span>
-                  {app.interviewDate && (
-                    <div className="text-[10px] text-slate-500 mt-1">Interview: {app.interviewDate}</div>
-                  )}
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
 
-        {/* Right 1 Col: Skill Gap Summary & Alumni Suggestions */}
+        {/* Right Column: Skill Gaps & Mentors */}
         <div className="space-y-6">
-          {/* Skill Gap Summary Card */}
-          <div className="p-5 bg-white border border-slate-200 rounded-xl space-y-4">
+          {/* Skill Gap Summary */}
+          <div className="bg-white border border-slate-200/90 rounded-xl p-6 space-y-4">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Target className="w-4 h-4 text-rose-500" />
-                <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
-                  Skill Gap Summary
-                </h3>
-              </div>
-              <span className="text-xs font-bold text-rose-600">{skillGap.gapPercentage}% Gap</span>
+              <h3 className="text-sm font-bold text-slate-900">Skill Gap Overview</h3>
+              <span className="text-xs font-semibold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-md border border-amber-200/60 tabular-nums">
+                {skillGap.gapPercentage}% gap
+              </span>
             </div>
 
-            <p className="text-xs text-slate-600 leading-relaxed">
-              Targeting: <span className="font-semibold text-slate-900">{skillGap.domain}</span>
+            <p className="text-xs text-slate-500 leading-relaxed">
+              Target role: <span className="font-semibold text-slate-800">{skillGap.domain}</span>
             </p>
 
-            {/* Missing skills tags */}
             <div>
-              <div className="text-[11px] font-semibold text-slate-500 mb-1.5">Missing Skills Identified:</div>
+              <div className="text-xs font-medium text-slate-500 mb-2">Skills to develop</div>
               <div className="flex flex-wrap gap-1.5">
                 {skillGap.missingSkills.map((sk) => (
-                  <span key={sk} className="text-xs font-bold px-2 py-0.5 bg-rose-50 text-rose-700 border border-rose-200 rounded">
-                    + {sk}
+                  <span key={sk} className="text-xs font-medium px-2.5 py-1 bg-slate-100 text-slate-700 rounded-md">
+                    {sk}
                   </span>
                 ))}
               </div>
             </div>
 
-            <div>
-              <div className="text-[11px] font-semibold text-slate-500 mb-1.5">CDC Remediation Course:</div>
-              <div className="p-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs">
-                <div className="font-bold text-slate-800">{skillGap.recommendedCourses[0].title}</div>
-                <div className="text-[11px] text-slate-500 mt-0.5">{skillGap.recommendedCourses[0].provider}</div>
-              </div>
+            <div className="pt-3 border-t border-slate-100">
+              <div className="text-xs font-medium text-slate-500 mb-1">Recommended CDC Lab</div>
+              <div className="text-xs font-semibold text-slate-900">{skillGap.recommendedCourses[0].title}</div>
+              <div className="text-[11px] text-slate-500 mt-0.5">{skillGap.recommendedCourses[0].duration}</div>
             </div>
 
             <button
               onClick={() => setActiveTab('skill_gap')}
-              className="w-full py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-lg transition-colors flex items-center justify-center gap-1.5"
+              className="w-full py-2.5 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-lg transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
             >
-              Open Full Skill Gap Radar
+              <span>View Full Analysis</span>
               <ChevronRight className="w-3.5 h-3.5" />
             </button>
           </div>
 
-          {/* Alumni Connection Suggestions */}
-          <div className="p-5 bg-white border border-slate-200 rounded-xl space-y-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Users className="w-4 h-4 text-sky-600" />
-                <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
-                  Alumni Mentors
-                </h3>
-              </div>
+          {/* Alumni Mentors */}
+          <div className="bg-white border border-slate-200/90 rounded-xl overflow-hidden">
+            <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
+              <h3 className="text-sm font-bold text-slate-900">Alumni Mentors</h3>
               <button
                 onClick={() => setActiveTab('alumni_connect')}
-                className="text-xs text-indigo-600 font-semibold hover:underline"
+                className="text-xs text-[#5B4FE9] font-semibold hover:underline cursor-pointer"
               >
                 Directory
               </button>
             </div>
 
-            <div className="space-y-3">
+            <div className="divide-y divide-slate-100">
               {mentorships.map((m) => (
-                <div key={m.id} className="p-3 bg-slate-50 rounded-lg border border-slate-200 text-xs">
+                <div key={m.id} className="px-6 py-3.5 space-y-1">
                   <div className="flex items-center justify-between">
-                    <span className="font-bold text-slate-900">{m.alumniName}</span>
-                    <span className={`text-[10px] font-semibold px-1.5 py-0.5 rounded ${
-                      m.status === 'Connected' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'
+                    <span className="text-xs font-bold text-slate-900">{m.alumniName}</span>
+                    <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-md ${
+                      m.status === 'Connected' ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700'
                     }`}>
                       {m.status}
                     </span>
                   </div>
-                  <div className="text-[11px] text-slate-600 mt-0.5">{m.alumniRole} · {m.alumniCompany}</div>
-                  <p className="text-[11px] text-slate-500 mt-1 italic line-clamp-1">"{m.topic}"</p>
+                  <div className="text-xs text-slate-500">{m.alumniRole} · {m.alumniCompany}</div>
                 </div>
               ))}
             </div>
 
-            <button
-              onClick={() => setActiveTab('alumni_connect')}
-              className="w-full py-2 border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-semibold rounded-lg transition-colors"
-            >
-              Connect with Senior Alumni
-            </button>
+            <div className="p-4 border-t border-slate-100">
+              <button
+                onClick={() => setActiveTab('alumni_connect')}
+                className="w-full py-2 border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-semibold rounded-lg transition-colors cursor-pointer"
+              >
+                Browse Alumni Mentors
+              </button>
+            </div>
           </div>
         </div>
       </div>

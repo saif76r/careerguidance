@@ -1,16 +1,8 @@
 import React from 'react';
 import { 
-  GraduationCap, 
-  BookOpen, 
-  Users, 
-  TrendingUp,
   Plus,
-  Award,
   ArrowRight,
-  Layers,
-  Calendar,
-  Compass,
-  CheckCircle2
+  Compass
 } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 
@@ -31,7 +23,7 @@ export const CounselorDashboard: React.FC = () => {
       title: 'AWS Cloud Solutions Architecture',
       instructor: 'Engr. Tanvir Ahmed',
       schedule: 'Sun & Tue · 4:00 PM - 6:00 PM',
-      venue: 'Lab 402 & AWS Cloud Sandbox',
+      venue: 'Lab 402 & Cloud Sandbox',
       enrolled: 42,
       capacity: 45,
       status: 'In Progress'
@@ -56,144 +48,131 @@ export const CounselorDashboard: React.FC = () => {
       venue: 'Advanced Systems Lab 3',
       enrolled: 28,
       capacity: 35,
-      status: 'Upcoming Next Week'
+      status: 'Upcoming'
     }
   ];
 
   return (
-    <div className="space-y-6">
-      {/* Header Banner */}
-      <div className="p-6 bg-linear-to-r from-slate-900 via-amber-950 to-slate-900 text-white rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-sm">
+    <div className="space-y-8">
+      {/* Clean Page Header */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-5 border-b border-slate-200/80">
         <div>
-          <div className="flex items-center gap-2 text-amber-300 text-xs font-semibold mb-1">
-            <BookOpen className="w-3.5 h-3.5" />
-            <span>Career Development Center (CDC) Operations | {currentUser.department}</span>
+          <div className="text-xs font-medium text-slate-500 mb-1">
+            Career Development Center (CDC) · {currentUser.department}
           </div>
-          <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight">
-            CDC Counselor Dashboard
+          <h1 className="text-2xl font-bold text-slate-900 tracking-tight">
+            Counselor Overview
           </h1>
-          <p className="text-xs text-slate-300 mt-1 max-w-xl leading-relaxed">
-            Manage official CDC course offerings, monitor technical batch enrollment, track placement outcomes, and coordinate cohort training programs.
+          <p className="text-sm text-slate-500 mt-1">
+            Manage CDC course offerings, monitor batch enrollments, and guide student cohorts.
           </p>
         </div>
 
-        <div className="flex items-center gap-3 shrink-0">
-          <button
-            onClick={() => setActiveTab('cdc_courses')}
-            className="px-4 py-2 bg-amber-600 hover:bg-amber-500 text-white text-xs font-semibold rounded-lg transition-colors flex items-center gap-1.5 shadow-xs cursor-pointer"
-          >
-            <Plus className="w-3.5 h-3.5" />
-            Offer CDC Course
-          </button>
+        <div className="flex items-center gap-2.5 shrink-0">
           <button
             onClick={() => setActiveTab('career_guidance')}
-            className="px-4 py-2 bg-white/10 hover:bg-white/20 text-white text-xs font-semibold rounded-lg transition-colors border border-white/20 cursor-pointer flex items-center gap-1.5"
+            className="px-4 py-2 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold rounded-lg border border-slate-200 transition-colors flex items-center gap-1.5 cursor-pointer"
           >
             <Compass className="w-3.5 h-3.5" />
-            Career Guidance
+            <span>Career Guidance</span>
+          </button>
+          <button
+            onClick={() => setActiveTab('cdc_courses')}
+            className="px-4 py-2 bg-[#5B4FE9] hover:bg-[#4F43D6] text-white text-xs font-semibold rounded-lg transition-colors flex items-center gap-1.5 shadow-2xs cursor-pointer"
+          >
+            <Plus className="w-3.5 h-3.5" />
+            <span>Offer CDC Course</span>
           </button>
         </div>
       </div>
 
-      {/* Counselor KPI Cards */}
+      {/* KPI Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="p-4 bg-white border border-slate-200 rounded-xl">
-          <div className="text-xs text-slate-500 font-medium">Offered CDC Courses</div>
-          <div className="text-2xl font-extrabold text-amber-600 mt-1 tabular-nums">{cdcCourses.length}</div>
-          <div className="text-[11px] text-slate-500 mt-2">
-            Active in-house training tracks
-          </div>
+        <div
+          onClick={() => setActiveTab('cdc_courses')}
+          className="p-5 bg-white border border-slate-200/90 rounded-xl hover:border-slate-300 transition-colors cursor-pointer"
+        >
+          <div className="text-xs font-medium text-slate-500">Offered CDC Courses</div>
+          <div className="text-2xl font-bold text-slate-900 mt-2 tabular-nums">{cdcCourses.length}</div>
+          <div className="text-xs text-slate-500 mt-2">Active training tracks</div>
         </div>
 
-        <div className="p-4 bg-white border border-slate-200 rounded-xl">
-          <div className="text-xs text-slate-500 font-medium flex items-center justify-between">
-            <span>Enrolled CDC Trainees</span>
-            <Award className="w-3.5 h-3.5 text-indigo-600" />
-          </div>
-          <div className="text-2xl font-extrabold text-indigo-600 mt-1 tabular-nums">{totalEnrolled}</div>
-          <div className="text-[11px] text-slate-500 mt-2">
-            Across {cdcCourses.length} active skill batches
-          </div>
+        <div className="p-5 bg-white border border-slate-200/90 rounded-xl">
+          <div className="text-xs font-medium text-slate-500">Enrolled Trainees</div>
+          <div className="text-2xl font-bold text-slate-900 mt-2 tabular-nums">{totalEnrolled}</div>
+          <div className="text-xs text-slate-500 mt-2">Across {cdcCourses.length} skill batches</div>
         </div>
 
-        <div className="p-4 bg-white border border-slate-200 rounded-xl">
-          <div className="text-xs text-slate-500 font-medium">Class Placement Rate</div>
-          <div className="text-2xl font-extrabold text-emerald-600 mt-1 tabular-nums">88.4%</div>
-          <div className="text-[11px] text-emerald-600 mt-2 flex items-center gap-1 font-medium">
-            <TrendingUp className="w-3.5 h-3.5" />
-            <span>+6.2% year-over-year</span>
-          </div>
+        <div
+          onClick={() => setActiveTab('analytics')}
+          className="p-5 bg-white border border-slate-200/90 rounded-xl hover:border-slate-300 transition-colors cursor-pointer"
+        >
+          <div className="text-xs font-medium text-slate-500">Placement Rate</div>
+          <div className="text-2xl font-bold text-slate-900 mt-2 tabular-nums">88.4%</div>
+          <div className="text-xs text-emerald-600 font-medium mt-2">+6.2% year-over-year</div>
         </div>
 
-        <div className="p-4 bg-white border border-slate-200 rounded-xl">
-          <div className="text-xs text-slate-500 font-medium">Assigned Advisees</div>
-          <div className="text-2xl font-extrabold text-slate-900 mt-1 tabular-nums">342</div>
-          <div className="text-[11px] text-slate-500 mt-2">
-            Class of 2026 Seniors
-          </div>
+        <div
+          onClick={() => setActiveTab('students')}
+          className="p-5 bg-white border border-slate-200/90 rounded-xl hover:border-slate-300 transition-colors cursor-pointer"
+        >
+          <div className="text-xs font-medium text-slate-500">Assigned Advisees</div>
+          <div className="text-2xl font-bold text-slate-900 mt-2 tabular-nums">342</div>
+          <div className="text-xs text-slate-500 mt-2">Class of 2026 seniors</div>
         </div>
       </div>
 
       {/* Main Content Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Left 2 Cols: Course Offerings Overview & Batch Schedules */}
+        {/* Left 2 Columns: Active Courses & Batches */}
         <div className="lg:col-span-2 space-y-6">
-          {/* Active CDC Course Offerings Card */}
-          <div className="p-6 bg-white border border-slate-200 rounded-xl space-y-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <BookOpen className="w-4 h-4 text-amber-600" />
-                <h2 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
-                  Active CDC Course Offerings
-                </h2>
+          <div className="bg-white border border-slate-200/90 rounded-xl overflow-hidden">
+            <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
+              <div>
+                <h2 className="text-sm font-bold text-slate-900">CDC Course Offerings</h2>
+                <p className="text-xs text-slate-500 mt-0.5">
+                  Targeted technical tracks bridging student skill gaps
+                </p>
               </div>
               <button
                 onClick={() => setActiveTab('cdc_courses')}
-                className="text-xs text-amber-700 font-semibold hover:underline flex items-center gap-1 cursor-pointer"
+                className="text-xs text-[#5B4FE9] font-semibold hover:underline flex items-center gap-1 cursor-pointer"
               >
-                <span>View Full Catalog</span>
-                <ArrowRight className="w-3 h-3" />
+                <span>Manage catalog</span>
+                <ArrowRight className="w-3.5 h-3.5" />
               </button>
             </div>
 
-            <p className="text-xs text-slate-500">
-              Department training courses designed to provide targeted technical competencies for student hiring.
-            </p>
-
-            <div className="space-y-3">
+            <div className="divide-y divide-slate-100">
               {cdcCourses.map((course) => {
                 const fillPercent = Math.round((course.enrolledStudentsCount / course.capacity) * 100);
 
                 return (
-                  <div key={course.id} className="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-2.5 text-xs">
+                  <div key={course.id} className="p-5 space-y-3">
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                       <div>
                         <div className="flex items-center gap-2">
-                          <span className="font-bold text-slate-900">{course.title}</span>
-                          <span className="text-[10px] font-mono font-semibold px-1.5 py-0.5 bg-white border border-slate-200 rounded text-slate-700">
+                          <span className="text-sm font-bold text-slate-900">{course.title}</span>
+                          <span className="text-[11px] font-mono text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md">
                             {course.code}
                           </span>
                         </div>
-                        <div className="text-slate-500 text-[11px] mt-0.5">
-                          Target Skill: <strong className="text-slate-700">{course.targetSkill}</strong> · Level: {course.level} · Duration: {course.duration}
+                        <div className="text-xs text-slate-500 mt-0.5">
+                          Target skill: <span className="font-medium text-slate-700">{course.targetSkill}</span> · {course.level} · {course.duration}
                         </div>
                       </div>
 
-                      <div className="flex items-center gap-3">
-                        <div className="text-right">
-                          <div className="font-bold text-slate-900 tabular-nums">
-                            {course.enrolledStudentsCount} / {course.capacity}
-                          </div>
-                          <div className="text-[10px] text-slate-500">enrolled ({fillPercent}%)</div>
+                      <div className="text-right shrink-0">
+                        <div className="text-xs font-bold text-slate-900 tabular-nums">
+                          {course.enrolledStudentsCount} / {course.capacity} enrolled
                         </div>
+                        <div className="text-[11px] text-slate-400 tabular-nums">{fillPercent}% capacity</div>
                       </div>
                     </div>
 
-                    <div className="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden">
+                    <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
                       <div 
-                        className={`h-full rounded-full ${
-                          fillPercent >= 90 ? 'bg-amber-600' : 'bg-emerald-600'
-                        }`}
+                        className="h-full rounded-full bg-[#5B4FE9]"
                         style={{ width: `${Math.min(fillPercent, 100)}%` }}
                       />
                     </div>
@@ -201,173 +180,84 @@ export const CounselorDashboard: React.FC = () => {
                 );
               })}
             </div>
-
-            <div className="pt-2 flex justify-end">
-              <button
-                onClick={() => setActiveTab('cdc_courses')}
-                className="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-lg transition-colors flex items-center gap-1.5 cursor-pointer"
-              >
-                <Plus className="w-3.5 h-3.5" />
-                Add New CDC Course
-              </button>
-            </div>
           </div>
 
-          {/* CDC Training Batches & Timetable */}
-          <div className="p-6 bg-white border border-slate-200 rounded-xl space-y-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Calendar className="w-4 h-4 text-indigo-600" />
-                <h2 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
-                  Active CDC Training Batches
-                </h2>
-              </div>
-              <span className="text-[11px] text-slate-500 font-mono">Current Semester</span>
+          {/* Training Batches */}
+          <div className="bg-white border border-slate-200/90 rounded-xl overflow-hidden">
+            <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
+              <h2 className="text-sm font-bold text-slate-900">Active Training Batches</h2>
+              <span className="text-xs text-slate-400">Fall 2026</span>
             </div>
 
-            <div className="space-y-3">
+            <div className="divide-y divide-slate-100">
               {trainingBatches.map((batch) => (
-                <div key={batch.id} className="p-4 bg-slate-50 border border-slate-200 rounded-xl text-xs space-y-2">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
-                    <div className="font-bold text-slate-900">
-                      {batch.title} <span className="font-mono text-slate-500 font-normal">({batch.courseCode})</span>
+                <div key={batch.id} className="p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-semibold text-slate-900">{batch.title}</span>
+                      <span className="text-xs font-mono text-slate-400">{batch.courseCode}</span>
                     </div>
-                    <span className={`text-[10px] font-semibold px-2 py-0.5 rounded border self-start sm:self-auto ${
-                      batch.status === 'In Progress' 
-                        ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
-                        : 'bg-indigo-50 text-indigo-700 border-indigo-200'
-                    }`}>
-                      {batch.status}
-                    </span>
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-[11px] text-slate-600 pt-1 border-t border-slate-200/70">
-                    <div>
-                      Instructor: <strong className="text-slate-800">{batch.instructor}</strong>
-                    </div>
-                    <div>
-                      Schedule: <strong className="text-slate-800">{batch.schedule}</strong>
-                    </div>
-                    <div>
-                      Venue: <strong className="text-slate-800">{batch.venue}</strong>
+                    <div className="text-xs text-slate-500">
+                      {batch.instructor} · {batch.schedule} · {batch.venue}
                     </div>
                   </div>
+                  <span className={`text-[11px] font-semibold px-2.5 py-1 rounded-md border shrink-0 self-start sm:self-auto ${
+                    batch.status === 'In Progress' 
+                      ? 'bg-emerald-50 text-emerald-700 border-emerald-200/70'
+                      : 'bg-slate-100 text-slate-700 border-slate-200'
+                  }`}>
+                    {batch.status}
+                  </span>
                 </div>
               ))}
             </div>
           </div>
-
-          {/* Dedicated Career Guidance Callout Banner */}
-          <div className="p-5 bg-gradient-to-r from-indigo-50 via-sky-50 to-indigo-50 border border-indigo-100 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div className="space-y-1">
-              <div className="flex items-center gap-2 text-indigo-700 font-bold text-xs uppercase tracking-wider">
-                <Compass className="w-4 h-4" />
-                <span>Dedicated Career Guidance Portal</span>
-              </div>
-              <p className="text-xs text-slate-600 max-w-xl">
-                Advisee mentorship, 1:1 counseling dispatch, and personalized career roadmaps have their own dedicated space.
-              </p>
-            </div>
-
-            <button
-              onClick={() => setActiveTab('career_guidance')}
-              className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold rounded-lg transition-colors flex items-center justify-center gap-1.5 shrink-0 shadow-xs cursor-pointer"
-            >
-              <span>Go to Career Guidance</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </button>
-          </div>
         </div>
 
-        {/* Right 1 Col: CDC Training Tracks & Quick Metrics */}
+        {/* Right Column: Cohort & Tracks */}
         <div className="space-y-6">
-          {/* CDC Department Training Tracks */}
-          <div className="p-5 bg-white border border-slate-200 rounded-xl space-y-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Layers className="w-4 h-4 text-indigo-600" />
-                <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
-                  CDC Training Tracks
-                </h3>
-              </div>
-              <span className="text-[10px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
-                Accredited
-              </span>
-            </div>
+          <div className="bg-white border border-slate-200/90 rounded-xl p-6 space-y-4">
+            <h3 className="text-sm font-bold text-slate-900">Cohort Summary</h3>
 
-            <p className="text-xs text-slate-500">
-              Department curriculum tracks aligned with national and global hiring standards.
-            </p>
-
-            <div className="space-y-2.5">
-              <div className="p-3 bg-slate-50 rounded-lg border border-slate-200 text-xs">
-                <div className="flex items-center justify-between font-bold text-slate-900">
-                  <span>Cloud & Infrastructure</span>
-                  <span className="text-[10px] text-indigo-600 font-mono">2 Modules</span>
-                </div>
-                <p className="text-[11px] text-slate-500 mt-1">
-                  AWS Cloud Architecture, Docker Containerization & Microservices
-                </p>
-              </div>
-
-              <div className="p-3 bg-slate-50 rounded-lg border border-slate-200 text-xs">
-                <div className="flex items-center justify-between font-bold text-slate-900">
-                  <span>Full-Stack & Systems</span>
-                  <span className="text-[10px] text-indigo-600 font-mono">2 Modules</span>
-                </div>
-                <p className="text-[11px] text-slate-500 mt-1">
-                  Modern React 19 Ecosystem, Distributed Scalable System Design
-                </p>
-              </div>
-
-              <div className="p-3 bg-slate-50 rounded-lg border border-slate-200 text-xs">
-                <div className="flex items-center justify-between font-bold text-slate-900">
-                  <span>AI & Data Engineering</span>
-                  <span className="text-[10px] text-indigo-600 font-mono">1 Module</span>
-                </div>
-                <p className="text-[11px] text-slate-500 mt-1">
-                  Applied Machine Learning, PyTorch & Production MLOps Pipelines
-                </p>
-              </div>
-            </div>
-
-            <button
-              onClick={() => openFeedbackModal('CDC Course Offerings & Training')}
-              className="w-full py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold rounded-lg transition-colors cursor-pointer"
-            >
-              Collect CDC Training Feedback
-            </button>
-          </div>
-
-          {/* Quick Cohort Summary */}
-          <div className="p-5 bg-white border border-slate-200 rounded-xl space-y-4">
-            <div className="flex items-center gap-2">
-              <Users className="w-4 h-4 text-slate-700" />
-              <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
-                Advisee Cohort Overview
-              </h3>
-            </div>
-
-            <div className="space-y-2 text-xs">
-              <div className="flex items-center justify-between p-2.5 bg-slate-50 rounded-lg border border-slate-200">
-                <span className="text-slate-600">Total Enrolled Advisees</span>
+            <div className="divide-y divide-slate-100 text-xs">
+              <div className="py-2.5 flex items-center justify-between">
+                <span className="text-slate-600">Total Advisees</span>
                 <span className="font-bold text-slate-900 tabular-nums">342</span>
               </div>
-              <div className="flex items-center justify-between p-2.5 bg-slate-50 rounded-lg border border-slate-200">
+              <div className="py-2.5 flex items-center justify-between">
                 <span className="text-slate-600">Active CDC Trainees</span>
-                <span className="font-bold text-indigo-600 tabular-nums">{totalEnrolled}</span>
+                <span className="font-bold text-slate-900 tabular-nums">{totalEnrolled}</span>
               </div>
-              <div className="flex items-center justify-between p-2.5 bg-slate-50 rounded-lg border border-slate-200">
+              <div className="py-2.5 flex items-center justify-between">
                 <span className="text-slate-600">Placement Cleared</span>
-                <span className="font-bold text-emerald-600 tabular-nums">302</span>
+                <span className="font-bold text-emerald-700 tabular-nums">302</span>
               </div>
             </div>
 
             <button
               onClick={() => setActiveTab('students')}
-              className="w-full py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-lg transition-colors cursor-pointer"
+              className="w-full py-2.5 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-lg transition-colors cursor-pointer"
             >
-              View Advisee Student Roster
+              View Student Roster
+            </button>
+          </div>
+
+          <div className="bg-white border border-slate-200/90 rounded-xl p-6 space-y-4">
+            <h3 className="text-sm font-bold text-slate-900">1:1 Career Guidance</h3>
+            <p className="text-xs text-slate-500 leading-relaxed">
+              Send personalized career notes and assign CDC remediation modules directly to individual students.
+            </p>
+            <button
+              onClick={() => setActiveTab('career_guidance')}
+              className="w-full py-2.5 bg-[#5B4FE9] hover:bg-[#4F43D6] text-white text-xs font-semibold rounded-lg transition-colors cursor-pointer"
+            >
+              Open Guidance Portal
+            </button>
+            <button
+              onClick={() => openFeedbackModal('CDC Training')}
+              className="w-full py-2 border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-semibold rounded-lg transition-colors cursor-pointer"
+            >
+              Collect Training Feedback
             </button>
           </div>
         </div>

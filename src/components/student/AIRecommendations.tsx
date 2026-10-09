@@ -154,40 +154,37 @@ export const AIRecommendations: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header Banner */}
-      <div className="p-6 bg-slate-900 text-white rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-xs">
+      {/* Page Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-slate-200">
         <div>
-          <div className="text-xs font-semibold text-slate-300 mb-1">
-            Academic Requisitions Matching: {currentUser.major}
-          </div>
-          <h1 className="text-xl sm:text-2xl font-bold tracking-tight">
+          <h1 className="text-2xl font-bold text-slate-900 tracking-tight">
             View Recommendations
           </h1>
-          <p className="text-xs text-slate-300 mt-1 max-w-xl leading-relaxed">
-            Positions matched to your academic background in {currentUser.degree} and verified coursework.
+          <p className="text-sm text-slate-500 mt-1">
+            Positions matched to your academic background in {currentUser.degree || 'Software Engineering'} and verified coursework.
           </p>
         </div>
 
-        <div className="flex items-center gap-3 shrink-0">
+        <div className="flex items-center gap-2.5 shrink-0">
           {hasGenerated && (
             <button
               onClick={handleGenerateRecommendations}
               disabled={isGenerating}
-              className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold rounded-lg transition-colors flex items-center gap-1.5 shadow-xs cursor-pointer"
+              className="px-4 py-2 bg-[#5B4FE9] hover:bg-[#4F43D6] text-white text-xs font-semibold rounded-lg transition-colors flex items-center gap-1.5 shadow-xs cursor-pointer"
             >
               <RefreshCw className={`w-3.5 h-3.5 ${isGenerating ? 'animate-spin' : ''}`} />
-              <span>Re-Analyze with AI</span>
+              <span>Re-Analyze</span>
             </button>
           )}
           <button
             onClick={() => setActiveTab('skill_gap')}
-            className="px-4 py-2 bg-white/10 hover:bg-white/20 text-white text-xs font-semibold rounded-lg transition-colors border border-white/20 cursor-pointer"
+            className="px-4 py-2 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold rounded-lg transition-colors border border-slate-200 cursor-pointer"
           >
-            Check Skill Gaps
+            Skill Gaps
           </button>
           <button
             onClick={() => setActiveTab('resume')}
-            className="px-4 py-2 bg-white/10 hover:bg-white/20 text-white text-xs font-semibold rounded-lg transition-colors border border-white/20 cursor-pointer"
+            className="px-4 py-2 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold rounded-lg transition-colors border border-slate-200 cursor-pointer"
           >
             Update Resume
           </button>
@@ -196,21 +193,17 @@ export const AIRecommendations: React.FC = () => {
 
       {/* STATE 1: INITIAL GENERATE RECOMMENDATIONS LAUNCHPAD */}
       {!hasGenerated && !isGenerating && (
-        <div className="p-8 sm:p-10 bg-white border border-slate-200 rounded-2xl shadow-2xs text-center max-w-3xl mx-auto space-y-6">
-          <div className="w-16 h-16 rounded-2xl bg-indigo-50 border border-indigo-100 text-indigo-600 flex items-center justify-center mx-auto shadow-2xs">
-            <Sparkles className="w-8 h-8" />
+        <div className="p-8 sm:p-10 bg-white border border-slate-200 rounded-xl text-center max-w-3xl mx-auto space-y-6">
+          <div className="w-12 h-12 rounded-xl bg-indigo-50 border border-indigo-100 text-[#5B4FE9] flex items-center justify-center mx-auto">
+            <Sparkles className="w-6 h-6" />
           </div>
 
           <div className="space-y-2 max-w-xl mx-auto">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-indigo-50 text-indigo-700 text-[11px] font-semibold border border-indigo-100">
-              <Cpu className="w-3.5 h-3.5" />
-              <span>AI Career Matching Engine Ready</span>
-            </div>
-            <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
+            <h2 className="text-xl font-bold text-slate-900 tracking-tight">
               Generate Personalized Job &amp; Internship Recommendations
             </h2>
-            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-              Click below to let our AI analyze your parsed resume skills, academic CGPA, and coursework against all active employer requisitions to rank your best-fit career opportunities.
+            <p className="text-sm text-slate-600 leading-relaxed">
+              Analyze your parsed resume skills, academic CGPA, and coursework against active employer requisitions to rank your best-fit career opportunities.
             </p>
           </div>
 
@@ -478,49 +471,49 @@ export const AIRecommendations: React.FC = () => {
 
                   {/* AI Deep Assessment Result */}
                   {jobAiAnalysis[job.id] && (
-                    <div className="p-4 bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white rounded-xl space-y-3 border border-slate-800">
+                    <div className="p-4 bg-slate-50 rounded-xl space-y-3 border border-slate-200">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
-                          <Sparkles className="w-4 h-4 text-amber-400" />
-                          <span className="text-xs font-bold uppercase tracking-wider text-amber-300">
-                            AI Candidate Fit Decomposition · {jobAiAnalysis[job.id].matchScore}% Match
+                          <Sparkles className="w-4 h-4 text-[#5B4FE9]" />
+                          <span className="text-xs font-bold text-slate-900">
+                            AI Candidate Fit Breakdown · {jobAiAnalysis[job.id].matchScore}% Match
                           </span>
                         </div>
-                        <span className="text-[10px] font-mono text-slate-300 bg-white/10 px-2 py-0.5 rounded">
+                        <span className="text-[11px] font-medium text-slate-500">
                           {jobAiAnalysis[job.id].poweredBy || 'AI Alignment Engine'}
                         </span>
                       </div>
 
-                      <p className="text-xs text-slate-200 leading-relaxed bg-white/5 p-3 rounded-lg border border-white/10">
+                      <p className="text-xs text-slate-600 leading-relaxed">
                         {jobAiAnalysis[job.id].rationale}
                       </p>
 
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5 text-xs">
-                        <div className="p-2.5 bg-white/5 rounded-lg border border-white/10 space-y-1">
-                          <div className="font-bold text-emerald-400 text-[11px]">Direct Matching Skills</div>
-                          <div className="flex flex-wrap gap-1 pt-1">
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs pt-2 border-t border-slate-200/80">
+                        <div className="space-y-1">
+                          <div className="font-semibold text-slate-900 text-[11px]">Direct Matching Skills</div>
+                          <div className="flex flex-wrap gap-1 pt-0.5">
                             {jobAiAnalysis[job.id].matchingCompetencies.map((c, i) => (
-                              <span key={i} className="text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-1.5 py-0.5 rounded font-mono">
+                              <span key={i} className="text-[11px] bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded font-medium">
                                 {c}
                               </span>
                             ))}
                           </div>
                         </div>
 
-                        <div className="p-2.5 bg-white/5 rounded-lg border border-white/10 space-y-1">
-                          <div className="font-bold text-amber-400 text-[11px]">Suggested Prep Areas</div>
-                          <div className="flex flex-wrap gap-1 pt-1">
+                        <div className="space-y-1">
+                          <div className="font-semibold text-slate-900 text-[11px]">Suggested Prep Areas</div>
+                          <div className="flex flex-wrap gap-1 pt-0.5">
                             {jobAiAnalysis[job.id].growthAreas.map((g, i) => (
-                              <span key={i} className="text-[10px] bg-amber-500/20 text-amber-300 border border-amber-500/30 px-1.5 py-0.5 rounded font-mono">
+                              <span key={i} className="text-[11px] bg-amber-50 text-amber-800 border border-amber-200 px-2 py-0.5 rounded font-medium">
                                 {g}
                               </span>
                             ))}
                           </div>
                         </div>
 
-                        <div className="p-2.5 bg-white/5 rounded-lg border border-white/10 space-y-1">
-                          <div className="font-bold text-sky-400 text-[11px]">Interview Focus Tips</div>
-                          <ul className="text-[10px] text-slate-300 space-y-1 pt-1">
+                        <div className="space-y-1">
+                          <div className="font-semibold text-slate-900 text-[11px]">Interview Focus Tips</div>
+                          <ul className="text-[11px] text-slate-600 space-y-1 pt-0.5">
                             {jobAiAnalysis[job.id].interviewTips.map((tip, i) => (
                               <li key={i} className="line-clamp-2">• {tip}</li>
                             ))}
@@ -531,35 +524,22 @@ export const AIRecommendations: React.FC = () => {
                   )}
 
                   {/* WHY THIS OPPORTUNITY MATCHES YOU */}
-                  <div className="p-4 bg-indigo-50/50 border border-indigo-100/90 rounded-xl space-y-2">
-                    <div className="text-xs font-bold text-indigo-950 flex items-center gap-1.5">
-                      <Sparkles className="w-3.5 h-3.5 text-indigo-600" />
-                      <span>Why this opportunity matches you:</span>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-2 text-xs text-slate-700">
-                      {job.matchReasons && job.matchReasons.length > 0 ? (
-                        job.matchReasons.map((reason, i) => (
-                          <div key={i} className="flex items-start gap-1.5 bg-white/70 p-2 rounded-lg border border-indigo-100/60">
-                            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
-                            <span className="text-[11px] font-medium leading-snug">{reason}</span>
-                          </div>
-                        ))
-                      ) : (
-                        <>
-                          <div className="flex items-start gap-1.5 bg-white/70 p-2 rounded-lg border border-indigo-100/60">
-                            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
-                            <span className="text-[11px] font-medium leading-snug">React &amp; core programming skill sets match</span>
-                          </div>
-                          <div className="flex items-start gap-1.5 bg-white/70 p-2 rounded-lg border border-indigo-100/60">
-                            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
-                            <span className="text-[11px] font-medium leading-snug">Software Engineering coursework matches requirements</span>
-                          </div>
-                          <div className="flex items-start gap-1.5 bg-white/70 p-2 rounded-lg border border-indigo-100/60">
-                            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
-                            <span className="text-[11px] font-medium leading-snug">Career interest in cloud technology matches</span>
-                          </div>
-                        </>
-                      )}
+                  <div className="pt-3 border-t border-slate-100">
+                    <div className="flex flex-wrap items-center gap-x-5 gap-y-1.5 text-xs text-slate-600">
+                      <span className="font-semibold text-slate-900">Match Signals:</span>
+                      {(job.matchReasons && job.matchReasons.length > 0
+                        ? job.matchReasons
+                        : [
+                            'React & core programming skill sets match',
+                            'Software Engineering coursework matches requirements',
+                            'Career interest in cloud technology matches'
+                          ]
+                      ).map((reason, i) => (
+                        <span key={i} className="inline-flex items-center gap-1.5">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                          <span>{reason}</span>
+                        </span>
+                      ))}
                     </div>
                   </div>
 
@@ -598,24 +578,23 @@ export const AIRecommendations: React.FC = () => {
             aria-label="Job Details and Application"
           >
             {/* Modal Header */}
-            <div className="px-6 py-4 bg-slate-900 text-white flex items-start justify-between gap-4">
+            <div className="px-6 py-4 bg-white border-b border-slate-200 flex items-start justify-between gap-4">
               <div className="space-y-1">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <span className="px-2.5 py-0.5 text-[11px] font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-400/30 rounded-md flex items-center gap-1">
-                    <Sparkles className="w-3 h-3 text-indigo-300" />
-                    {selectedJob.matchScore}% AI Match
+                  <span className="px-2.5 py-0.5 text-[11px] font-bold bg-indigo-50 text-[#5B4FE9] border border-indigo-100 rounded-md">
+                    {selectedJob.matchScore}% Match
                   </span>
-                  <span className="px-2 py-0.5 text-[11px] font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 rounded-md">
+                  <span className="px-2 py-0.5 text-[11px] font-semibold bg-slate-100 text-slate-700 rounded-md">
                     {selectedJob.type}
                   </span>
-                  <span className="px-2 py-0.5 text-[11px] font-medium bg-white/10 text-slate-300 rounded-md">
+                  <span className="text-[11px] text-slate-500">
                     {selectedJob.workplaceType}
                   </span>
                 </div>
-                <h2 className="text-lg font-extrabold tracking-tight text-white pt-1">
+                <h2 className="text-lg font-bold tracking-tight text-slate-900 pt-1">
                   {selectedJob.title}
                 </h2>
-                <div className="flex items-center gap-2 text-xs text-slate-300">
+                <div className="flex items-center gap-2 text-xs text-slate-600">
                   <Building2 className="w-3.5 h-3.5 text-slate-400" />
                   <span>{selectedJob.company}</span>
                   <span>·</span>
@@ -627,7 +606,7 @@ export const AIRecommendations: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setSelectedJob(null)}
-                className="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-white/10 transition-colors cursor-pointer"
+                className="p-1.5 text-slate-400 hover:text-slate-700 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
