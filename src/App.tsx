@@ -111,9 +111,9 @@ const MainLayout: React.FC = () => {
             return <PostJobForm />;
           case 'candidates':
           case 'candidate_ranking':
-            return <CandidateRankingView />;
+            return <RecruiterApplications initialView="ranking" />;
           case 'applications':
-            return <RecruiterApplications />;
+            return <RecruiterApplications initialView="applicants" />;
           case 'analytics':
             return <AnalyticsView />;
           case 'feedback':

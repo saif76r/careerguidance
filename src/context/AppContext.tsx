@@ -63,7 +63,18 @@ interface AppContextType {
   
   // Candidates
   candidateRankings: CandidateRanking[];
-  updateCandidateStatus: (candidateId: string, status: ApplicationStatus) => void;
+  updateCandidateStatus: (candidateId: string, status: ApplicationStatus, jobId?: string) => void;
+  scheduleInterview: (params: {
+    applicationId?: string;
+    candidateId?: string;
+    jobId?: string;
+    candidateName: string;
+    jobTitle: string;
+    interviewDate: string;
+    interviewType: string;
+    meetLink: string;
+    notes?: string;
+  }) => void;
   
   // Resume & Skill Gap
   resume: ResumeData;
@@ -215,6 +226,47 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
     setApplications(prev => [newApp, ...prev]);
     setJobs(prev => prev.map(j => j.id === jobId ? { ...j, applicantsCount: j.applicantsCount + 1 } : j));
+
+    // Also sync into candidateRankings so every applicant who applied appears in Rank Candidates
+    const studentSkills = currentUser.skills || ['React', 'JavaScript', 'Python'];
+    const matched = job.requiredSkills.filter(req =>
+      studentSkills.some(s => s.toLowerCase().includes(req.toLowerCase()) || req.toLowerCase().includes(s.toLowerCase()))
+    );
+    const missing = job.requiredSkills.filter(req => !matched.includes(req));
+    const score = job.matchScore || 88;
+
+    const newRanking: CandidateRanking = {
+      id: `cand_${Date.now()}`,
+      candidateId: currentUser.id,
+      applicationId: newApp.id,
+      name: currentUser.name,
+      email: currentUser.email,
+      avatar: currentUser.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=256&q=80',
+      university: currentUser.university || 'Daffodil International University',
+      degree: currentUser.degree || 'B.Sc. CSE',
+      gpa: currentUser.gpa ? `CGPA ${currentUser.gpa}` : 'CGPA 3.86',
+      jobId: job.id,
+      jobTitle: job.title,
+      company: job.company,
+      appliedDate: newApp.appliedDate,
+      matchScore: score,
+      rank: candidateRankings.length + 1,
+      status: 'Applied',
+      factors: {
+        skillsMatch: Math.min(99, score + 1),
+        educationMatch: Math.min(99, score + 3),
+        experienceMatch: Math.max(75, score - 4),
+        careerInterestMatch: Math.min(99, score + 2)
+      },
+      matchedSkills: matched.length > 0 ? matched : studentSkills.slice(0, 4),
+      missingSkills: missing,
+      experienceSummary: `${currentUser.degree || 'B.Sc. CSE'} candidate with verified coursework and project portfolio.`
+    };
+
+    setCandidateRankings(prev => {
+      const updated = [newRanking, ...prev].sort((a, b) => b.matchScore - a.matchScore);
+      return updated.map((item, idx) => ({ ...item, rank: idx + 1 }));
+    });
     
     // Auto-create recruiter notification
     sendNotification({
@@ -251,6 +303,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   const updateApplicationStatus = (appId: string, status: ApplicationStatus, note?: string) => {
+    const targetApp = applications.find(a => a.id === appId);
     setApplications(prev => prev.map(app => {
       if (app.id !== appId) return app;
       const today = new Date().toISOString().split('T')[0];
@@ -267,8 +320,15 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       };
     }));
 
+    // Sync status with candidateRankings
+    setCandidateRankings(prev => prev.map(c => {
+      if (c.applicationId === appId || (targetApp && c.candidateId === targetApp.studentId && c.jobId === targetApp.jobId)) {
+        return { ...c, status };
+      }
+      return c;
+    }));
+
     // Trigger notification to student
-    const targetApp = applications.find(a => a.id === appId);
     if (targetApp) {
       sendNotification({
         recipientRole: 'student',
@@ -281,9 +341,100 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     showToast(`Application status updated to "${status}"`);
   };
 
-  const updateCandidateStatus = (candidateId: string, status: ApplicationStatus) => {
-    setCandidateRankings(prev => prev.map(c => c.candidateId === candidateId ? { ...c, status } : c));
+  const updateCandidateStatus = (candidateId: string, status: ApplicationStatus, jobId?: string) => {
+    setCandidateRankings(prev => prev.map(c => {
+      if (c.candidateId === candidateId && (!jobId || c.jobId === jobId)) {
+        return { ...c, status };
+      }
+      return c;
+    }));
+
+    // Sync status with applications
+    const today = new Date().toISOString().split('T')[0];
+    setApplications(prev => prev.map(app => {
+      if (app.studentId === candidateId && (!jobId || app.jobId === jobId)) {
+        const updatedTimeline = app.timeline.map(step =>
+          step.stage === status ? { ...step, completed: true, date: today, note: `Status updated to ${status}` } : step
+        );
+        return { ...app, status, timeline: updatedTimeline };
+      }
+      return app;
+    }));
+
     showToast(`Candidate status updated to ${status}`);
+  };
+
+  const scheduleInterview = ({
+    applicationId,
+    candidateId,
+    jobId,
+    candidateName,
+    jobTitle,
+    interviewDate,
+    interviewType,
+    meetLink,
+    notes
+  }: {
+    applicationId?: string;
+    candidateId?: string;
+    jobId?: string;
+    candidateName: string;
+    jobTitle: string;
+    interviewDate: string;
+    interviewType: string;
+    meetLink: string;
+    notes?: string;
+  }) => {
+    const formattedDate = interviewDate.includes('T') ? interviewDate.replace('T', ' at ') : interviewDate;
+    const timelineNote = `Interview scheduled for ${formattedDate} (${interviewType}). Google Meet: ${meetLink}${notes ? ` · Note: ${notes}` : ''}`;
+    const today = new Date().toISOString().split('T')[0];
+
+    setApplications(prev => prev.map(app => {
+      const matchesApp =
+        (applicationId && app.id === applicationId) ||
+        (candidateId && app.studentId === candidateId && (!jobId || app.jobId === jobId));
+      if (!matchesApp) return app;
+
+      const updatedTimeline = app.timeline.map(step => {
+        if (step.stage === 'Interview') {
+          return { ...step, completed: true, date: today, note: timelineNote };
+        }
+        return step;
+      });
+
+      return {
+        ...app,
+        status: 'Interview',
+        interviewDate: formattedDate,
+        interviewType,
+        meetLink,
+        timeline: updatedTimeline
+      };
+    }));
+
+    setCandidateRankings(prev => prev.map(c => {
+      const matchesCand =
+        (applicationId && c.applicationId === applicationId) ||
+        (candidateId && c.candidateId === candidateId && (!jobId || c.jobId === jobId));
+      if (!matchesCand) return c;
+
+      return {
+        ...c,
+        status: 'Interview',
+        interviewDate: formattedDate,
+        interviewType,
+        meetLink
+      };
+    }));
+
+    sendNotification({
+      recipientRole: 'student',
+      title: `Interview Scheduled · ${jobTitle}`,
+      message: `${currentUser.companyName || 'Employer'} invited ${candidateName} to a ${interviewType} on ${formattedDate}. Join via Google Meet: ${meetLink}`,
+      category: 'application'
+    });
+
+    showToast(`Interview scheduled with ${candidateName} & Meet link sent!`);
   };
 
   const updateResume = (newResume: Partial<ResumeData>) => {
@@ -492,6 +643,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         updateApplicationStatus,
         candidateRankings,
         updateCandidateStatus,
+        scheduleInterview,
         resume,
         updateResume,
         skillGap,

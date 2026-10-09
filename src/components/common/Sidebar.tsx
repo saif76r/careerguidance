@@ -63,7 +63,6 @@ export const Sidebar: React.FC = () => {
         return [
           { id: 'dashboard', label: 'Overview', icon: <LayoutDashboard className="w-4 h-4" /> },
           { id: 'post_job', label: 'Post a Job', icon: <PlusCircle className="w-4 h-4" /> },
-          { id: 'candidate_ranking', label: 'Candidate Ranking', icon: <Award className="w-4 h-4" /> },
           { id: 'applications', label: 'Applicants', icon: <FolderGit2 className="w-4 h-4" />, badge: applications.length },
           { id: 'analytics', label: 'Analytics', icon: <BarChart3 className="w-4 h-4" /> },
           { id: 'profile', label: 'Company Profile', icon: <Building2 className="w-4 h-4" /> },
@@ -105,6 +104,7 @@ export const Sidebar: React.FC = () => {
           {items.map((item) => {
             const isActive =
               activeTab === item.id ||
+              (item.id === 'applications' && ['candidate_ranking', 'candidates'].includes(activeTab)) ||
               (item.id === 'career_guidance' && activeTab === 'cdc_courses') ||
               (item.id === 'users' && ['students', 'alumni', 'employers', 'career_counselors'].includes(activeTab));
 

@@ -94,17 +94,24 @@ export interface Application {
   }[];
   notes?: string;
   interviewDate?: string;
+  interviewType?: string;
+  meetLink?: string;
 }
 
 export interface CandidateRanking {
   id: string;
   candidateId: string;
+  applicationId?: string;
   name: string;
+  email?: string;
   avatar: string;
   university: string;
   degree: string;
+  gpa?: string;
   jobId: string;
   jobTitle: string;
+  company?: string;
+  appliedDate?: string;
   matchScore: number;
   rank: number;
   status: ApplicationStatus;
@@ -118,6 +125,9 @@ export interface CandidateRanking {
   missingSkills: string[];
   experienceSummary: string;
   resumeUrl?: string;
+  interviewDate?: string;
+  interviewType?: string;
+  meetLink?: string;
 }
 
 export interface NotificationItem {

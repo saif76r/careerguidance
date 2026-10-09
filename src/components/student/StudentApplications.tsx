@@ -211,21 +211,41 @@ export const StudentApplications: React.FC = () => {
               </div>
 
               {/* Interview callout if present */}
-              {selectedApp.interviewDate && (
-                <div className="p-4 bg-indigo-50 border border-indigo-200 rounded-xl space-y-2">
-                  <div className="flex items-center gap-2 text-indigo-900 font-bold text-xs">
-                    <Calendar className="w-4 h-4 text-indigo-600" />
-                    <span>Technical Interview Scheduled</span>
+              {(selectedApp.interviewDate || selectedApp.meetLink) && (
+                <div className="p-4 bg-indigo-50/70 border border-indigo-200 rounded-xl space-y-2.5">
+                  <div className="flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-2 text-indigo-950 font-bold text-xs">
+                      <Calendar className="w-4 h-4 text-[#5B4FE9]" />
+                      <span>{selectedApp.interviewType || 'Technical Interview Scheduled'}</span>
+                    </div>
+                    {selectedApp.meetLink && (
+                      <span className="text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                        Google Meet Ready
+                      </span>
+                    )}
                   </div>
-                  <p className="text-xs text-indigo-800">
-                    Your interview with the Cloud Platform Engineering team is set for <strong className="text-slate-900">{selectedApp.interviewDate}</strong>.
-                  </p>
-                  <div className="pt-2 flex items-center gap-2">
+                  {selectedApp.interviewDate && (
+                    <p className="text-xs text-slate-700">
+                      Your interview with <strong>{selectedApp.company}</strong> is scheduled for <strong className="text-slate-900">{selectedApp.interviewDate}</strong>.
+                    </p>
+                  )}
+                  <div className="pt-1 flex flex-wrap items-center gap-2.5">
+                    {selectedApp.meetLink && (
+                      <a
+                        href={selectedApp.meetLink}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="px-3.5 py-1.5 bg-[#5B4FE9] hover:bg-[#4F43D6] text-white text-xs font-semibold rounded-lg transition-colors inline-flex items-center gap-1.5 shadow-2xs"
+                      >
+                        <span>Join Google Meet ({selectedApp.meetLink.replace('https://', '')})</span>
+                        <ExternalLink className="w-3.5 h-3.5" />
+                      </a>
+                    )}
                     <button
                       onClick={() => openFeedbackModal(selectedApp.company)}
-                      className="px-3 py-1 bg-white hover:bg-slate-50 text-indigo-900 text-xs font-semibold rounded border border-indigo-200"
+                      className="px-3 py-1.5 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold rounded-lg border border-slate-200 cursor-pointer"
                     >
-                      Interview Guidelines & Prep Checklist
+                      Interview Prep &amp; Feedback
                     </button>
                   </div>
                 </div>
